@@ -7,12 +7,15 @@
 //
 
 #import "QuestionTableViewController.h"
-
+#import "QuestionTableViewCell.h"
 @interface QuestionTableViewController ()
 
 @end
 
 @implementation QuestionTableViewController
+
+static NSString *CellIdentifier = @"CellIdentifier";
+
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
@@ -27,6 +30,22 @@
 {
     [super viewDidLoad];
     
+    
+    
+    _data = @[
+                @{@"Question": @"jeff" , @"AnsCount" : @"15"},
+                @{@"Question": @"asdfsdfgdsfgsdfgcxvcxvbxcvbdsfgd sfg sdfsfasdfasdfsad asd asdf asdfasdfasdf" , @"AnsCount" : @"15"},
+                @{@"Question": @"xgxcv" , @"AnsCount" : @"10"},
+                @{@"Question": @"erd" , @"AnsCount" : @"11"},
+                @{@"Question": @"fghfg" , @"AnsCount" : @"18"},
+                @{@"Question": @"hfg" , @"AnsCount" : @"10"},
+                ];
+    UITableView *tableView = (id)[self.view viewWithTag:1];
+    [tableView registerClass:[QuestionTableViewCell class] forCellReuseIdentifier:CellIdentifier];
+
+    
+    
+    
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
     
@@ -34,7 +53,30 @@
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
 }
 
+
+
 - (void)didReceiveMemoryWarning
+{
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
+}
+
+-(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    return  [self.data count];
+}
+
+-(UITableViewCell *) tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    QuestionTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    NSDictionary *rowData = self.data[indexPath.row];
+    cell.question = rowData[@"Question"];
+    cell.answerCount = rowData[@"AnsCount"];
+    return cell;
+}
+
+
+
+
+/*- (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
@@ -48,13 +90,16 @@
     // Return the number of sections.
     return 0;
 }
+ 
+ */
+ 
 
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+/*- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
 #warning Incomplete method implementation.
     // Return the number of rows in the section.
     return 0;
-}
+}*/
 
 /*
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath

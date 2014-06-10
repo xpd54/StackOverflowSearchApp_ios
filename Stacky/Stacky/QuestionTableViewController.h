@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface QuestionTableViewController : UITableViewController
-
+@interface QuestionTableViewController : UITableViewController<UITableViewDataSource,UITableViewDelegate>
+@property (copy,nonatomic) NSArray *data;
 @end
