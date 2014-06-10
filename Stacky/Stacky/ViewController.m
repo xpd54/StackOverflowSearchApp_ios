@@ -7,7 +7,6 @@
 //
 
 #import "ViewController.h"
-
 @interface ViewController ()
 
 @end
@@ -26,13 +25,19 @@
     // Dispose of any resources that can be recreated.
 }
 
+// close the keyboard
+
 - (IBAction)backGroundTap:(id)sender {
     [self.view endEditing:YES];
 }
 
+// close the apps
+
 - (IBAction)exitButton:(id)sender {
     exit(0);
 }
+
+// getting search text from user 
 
 - (IBAction)searchButton:(id)sender {
     NSLog(@"%@",self.searchText.text);
