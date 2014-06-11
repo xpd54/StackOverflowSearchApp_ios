@@ -7,6 +7,7 @@
 //
 
 #import "ViewController.h"
+#import "DataProcess.h"
 @interface ViewController ()
 
 @end
@@ -40,7 +41,8 @@
 // getting search text from user 
 
 - (IBAction)searchButton:(id)sender {
-    NSLog(@"%@",self.searchText.text);
+    DataProcess *dataFromInternet = [[DataProcess alloc] init];
+    [dataFromInternet createData: self.searchText.text :@"items"];
 }
 
 @end
