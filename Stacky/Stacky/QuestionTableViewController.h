@@ -7,7 +7,5 @@
 //
 
 #import <UIKit/UIKit.h>
-
 @interface QuestionTableViewController : UITableViewController<UITableViewDataSource,UITableViewDelegate>
-@property (copy,nonatomic) NSArray *data;
 @end
