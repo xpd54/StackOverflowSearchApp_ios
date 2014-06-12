@@ -21,43 +21,32 @@ static NSString *CellIdentifier = @"CellIdentifier";
     return url;
 }
 
-
+// Fetching Data from Internet
 -(NSArray *) fetchDataFromInternet:(NSData *)responseData : (NSString *)objectKey {
     //parse out the json data
     NSError* error;
     NSDictionary* json = [NSJSONSerialization JSONObjectWithData:responseData options:kNilOptions error:&error];
     NSArray* resultOfSearch = [json objectForKey:objectKey];
-    //NSLog(@"items: %@", resultOfSearch);
-    NSDictionary *items = [resultOfSearch objectAtIndex:1];
-    
-    NSString *print = [NSString stringWithFormat:@"question title is : %@   %@",[items objectForKey:@"title"],[items objectForKey:@"accepted_answer_id"]];
-    NSLog(@"%@",print);
-    
-    
     return resultOfSearch;
 }
 
+
+//creating data and saving it in database
+
 -(void) createData:(NSString *)searchText : (NSString *)objecKey  {
-    NSString *apiCall = [self getApiCall:searchText]; // remove gUserTextForSearch
-    //NSLog(@"%@",apiCall);
+    NSString *apiCall = [self getApiCall:searchText];
     NSData* responseData = [NSData dataWithContentsOfURL:[NSURL URLWithString:apiCall]];
-    _data = [self fetchDataFromInternet:responseData :objecKey];
-    
-    /*for(int i = 0 ;i<[_data count];i++ ) {
-        NSDictionary *currentData = [_data objectAtIndex:i];
-        NSLog(@"%@ %d",[currentData objectForKey:@"question_id"],i);
-    }*/
-    [self saveDataInDataBase:_data];
+    [self saveDataInDataBase:[self fetchDataFromInternet:responseData :objecKey]];
+
 }
 
 -(void) saveDataInDataBase : (NSArray *) dataFromInternate {
-    
+    [self deleteOldData:@"Question"]; // delete old data from data base
     for(int i = 0; i < [dataFromInternate count];i++) {
         NSManagedObjectContext *context = [self managedObjectContext];
         NSManagedObject *newQuestion = [NSEntityDescription insertNewObjectForEntityForName:@"Question" inManagedObjectContext:context];
         NSDictionary *currentData = [dataFromInternate objectAtIndex:i];
-        //NSLog(@"%@",[currentData objectForKey:@"question_id"]);
-        [newQuestion setValue:[currentData objectForKey:@"title"] forKey:@"title"];
+        [newQuestion setValue:[NSString stringWithFormat:@"%@",[currentData objectForKey:@"title"]]  forKey:@"title"];
         [newQuestion setValue:[NSString stringWithFormat:@"%@",[currentData objectForKey:@"question_id"]]  forKey:@"question_id"];
         [newQuestion setValue:[NSString stringWithFormat:@"%@",[currentData objectForKey:@"answer_count"]]  forKey:@"answer_count"];
         [newQuestion setValue:[NSString stringWithFormat:@"%@",[currentData objectForKey:@"accepted_answer_id"]]  forKey:@"accepted_answer_id"];;
@@ -66,16 +55,36 @@ static NSString *CellIdentifier = @"CellIdentifier";
             NSLog(@"Can't Save! %@ %@", error, [error localizedDescription]);
         }
     }
+    gArray = [self fetcheDataFromDataBase:@"Question"];
 }
 
--(NSDictionary *) getTestData : (NSInteger ) row {
-    
-    // json data sould be like that
-    //_data = @[@{@"title":@"jeff" , @"answer_count":@"15"}  ,  @{@"title": @"asdfsdfgdsfgsdfgcxg sdfsfasdfasdfsad asd asdf asdfasdfasdf"  ,   @"answer_count":@"15"}   ,  @{@"title": @"xgxcv" ,   @"answer_count":@"10"},  @{@"title":@"erd" , @"answer_count": @"11"},@{@"title":@"fghfg" , @"answer_count":@"18"},@{@"title":@"hfg" , @"answer_count":@"10"},];
-    NSLog(@"%ld",(long)row);
-    NSDictionary *finalData = [_data objectAtIndex:row];
-    NSLog(@"%@   %@",[finalData objectForKey:@"title"],[finalData objectForKey:@"answer_count"]);
-    return finalData;
+
+// reading data from database
+
+-(NSArray *) fetcheDataFromDataBase : (NSString *) entityName {
+    NSArray *fetchedData;
+    NSManagedObjectContext *managedObjectContext = [self managedObjectContext];
+    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:entityName];
+    fetchedData = [[managedObjectContext executeFetchRequest:fetchRequest error:nil] mutableCopy];
+    return fetchedData;
+}
+
+//delete old data form data Base
+
+-(void) deleteOldData : (NSString *) entityName {
+    NSManagedObjectContext *managedObjectContext = [self managedObjectContext];
+    NSFetchRequest *allQuestion = [[NSFetchRequest alloc] init];
+    [allQuestion setEntity:[NSEntityDescription entityForName:@"Question" inManagedObjectContext:managedObjectContext]];
+    [allQuestion setIncludesPropertyValues:NO]; //only fetch the managedObjectID
+    NSError * error = nil;
+    NSArray * questions = [managedObjectContext executeFetchRequest:allQuestion error:&error];
+    //error handling goes here
+    for (NSManagedObject * que in questions) {
+        [managedObjectContext deleteObject:que];
+    }
+    NSError *saveError = nil;
+    [managedObjectContext save:&saveError];
+    //more error handling here
 }
 
 
@@ -87,6 +96,4 @@ static NSString *CellIdentifier = @"CellIdentifier";
     }
     return context;
 }
-
-
 @end
