@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="5056" systemVersion="13D65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="1d2-gP-Hoj">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="5056" systemVersion="13D65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="Vim-Ex-LSv">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3733"/>
     </dependencies>
@@ -35,6 +35,7 @@
                                 </state>
                                 <connections>
                                     <action selector="searchButton:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="OVX-Wx-GEG"/>
+                                    <segue destination="Oji-Vr-7Rc" kind="push" id="3xU-Vb-uHL"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="20q-G9-LJO">
@@ -64,22 +65,41 @@
                     </connections>
                 </viewController>
             </objects>
-            <point key="canvasLocation" x="-96" y="33"/>
+            <point key="canvasLocation" x="-406" y="264"/>
         </scene>
         <!--Navigation Controller-->
-        <scene sceneID="geD-H0-utb">
+        <scene sceneID="VJJ-1y-AC5">
             <objects>
-                <navigationController definesPresentationContext="YES" id="1d2-gP-Hoj" sceneMemberID="viewController">
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="LdI-CN-78p">
+                <navigationController definesPresentationContext="YES" id="Vim-Ex-LSv" sceneMemberID="viewController">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="4HS-Ni-cYX">
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <connections>
-                        <segue destination="vXZ-lx-hvc" kind="relationship" relationship="rootViewController" id="xN8-zw-OPe"/>
+                        <segue destination="vXZ-lx-hvc" kind="relationship" relationship="rootViewController" id="Gkc-0C-whf"/>
                     </connections>
                 </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="2gF-Qg-3Vu" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="fLE-9A-ca2" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-511" y="33"/>
+            <point key="canvasLocation" x="-827" y="247"/>
+        </scene>
+        <!--Question Table View Controller-->
+        <scene sceneID="TV5-N6-C0T">
+            <objects>
+                <tableViewController id="Oji-Vr-7Rc" customClass="QuestionTableViewController" sceneMemberID="viewController">
+                    <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" tag="1" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="95" sectionHeaderHeight="22" sectionFooterHeight="22" id="vZ7-Zz-4cG">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <connections>
+                            <outlet property="dataSource" destination="Oji-Vr-7Rc" id="lMq-HG-Kwc"/>
+                            <outlet property="delegate" destination="Oji-Vr-7Rc" id="HeM-lz-pMT"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" id="aoy-Bs-S1g"/>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Lj9-4x-zvL" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1" y="264"/>
         </scene>
     </scenes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">

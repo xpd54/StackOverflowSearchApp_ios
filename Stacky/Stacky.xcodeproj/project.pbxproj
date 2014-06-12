@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		161776101949798800D39A66 /* stackOverFlowData.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 1617760E1949798800D39A66 /* stackOverFlowData.xcdatamodeld */; };
+		161ACAF619488F8200A77DC1 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 161ACAF519488F8200A77DC1 /* CoreData.framework */; };
 		16A103121945B38300E595AB /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 16A103111945B38300E595AB /* Foundation.framework */; };
 		16A103141945B38300E595AB /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 16A103131945B38300E595AB /* CoreGraphics.framework */; };
 		16A103161945B38300E595AB /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 16A103151945B38300E595AB /* UIKit.framework */; };
@@ -21,6 +23,9 @@
 		16A103331945B38300E595AB /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 16A103151945B38300E595AB /* UIKit.framework */; };
 		16A1033B1945B38300E595AB /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 16A103391945B38300E595AB /* InfoPlist.strings */; };
 		16A1033D1945B38300E595AB /* StackyTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 16A1033C1945B38300E595AB /* StackyTests.m */; };
+		16A104611946E52300E595AB /* QuestionTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 16A104601946E52300E595AB /* QuestionTableViewController.m */; };
+		16A104641946E79900E595AB /* QuestionTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 16A104631946E79900E595AB /* QuestionTableViewCell.m */; };
+		16A1046719481D4F00E595AB /* DataProcess.m in Sources */ = {isa = PBXBuildFile; fileRef = 16A1046619481D4F00E595AB /* DataProcess.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -34,6 +39,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		1617760F1949798800D39A66 /* stackOverFlowData.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = stackOverFlowData.xcdatamodel; sourceTree = "<group>"; };
+		161ACAF519488F8200A77DC1 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		16A1030E1945B38300E595AB /* Stacky.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Stacky.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		16A103111945B38300E595AB /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		16A103131945B38300E595AB /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -53,6 +60,12 @@
 		16A103381945B38300E595AB /* StackyTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "StackyTests-Info.plist"; sourceTree = "<group>"; };
 		16A1033A1945B38300E595AB /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		16A1033C1945B38300E595AB /* StackyTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = StackyTests.m; sourceTree = "<group>"; };
+		16A1045F1946E52300E595AB /* QuestionTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QuestionTableViewController.h; sourceTree = "<group>"; };
+		16A104601946E52300E595AB /* QuestionTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QuestionTableViewController.m; sourceTree = "<group>"; };
+		16A104621946E79900E595AB /* QuestionTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QuestionTableViewCell.h; sourceTree = "<group>"; };
+		16A104631946E79900E595AB /* QuestionTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QuestionTableViewCell.m; sourceTree = "<group>"; };
+		16A1046519481D4F00E595AB /* DataProcess.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DataProcess.h; sourceTree = "<group>"; };
+		16A1046619481D4F00E595AB /* DataProcess.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DataProcess.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -60,6 +73,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				161ACAF619488F8200A77DC1 /* CoreData.framework in Frameworks */,
 				16A103141945B38300E595AB /* CoreGraphics.framework in Frameworks */,
 				16A103161945B38300E595AB /* UIKit.framework in Frameworks */,
 				16A103121945B38300E595AB /* Foundation.framework in Frameworks */,
@@ -101,6 +115,7 @@
 		16A103101945B38300E595AB /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				161ACAF519488F8200A77DC1 /* CoreData.framework */,
 				16A103111945B38300E595AB /* Foundation.framework */,
 				16A103131945B38300E595AB /* CoreGraphics.framework */,
 				16A103151945B38300E595AB /* UIKit.framework */,
@@ -115,8 +130,15 @@
 				16A103201945B38300E595AB /* AppDelegate.h */,
 				16A103211945B38300E595AB /* AppDelegate.m */,
 				16A103231945B38300E595AB /* Main.storyboard */,
+				1617760E1949798800D39A66 /* stackOverFlowData.xcdatamodeld */,
 				16A103261945B38300E595AB /* ViewController.h */,
 				16A103271945B38300E595AB /* ViewController.m */,
+				16A104621946E79900E595AB /* QuestionTableViewCell.h */,
+				16A104631946E79900E595AB /* QuestionTableViewCell.m */,
+				16A1045F1946E52300E595AB /* QuestionTableViewController.h */,
+				16A104601946E52300E595AB /* QuestionTableViewController.m */,
+				16A1046519481D4F00E595AB /* DataProcess.h */,
+				16A1046619481D4F00E595AB /* DataProcess.m */,
 				16A103291945B38300E595AB /* Images.xcassets */,
 				16A103181945B38300E595AB /* Supporting Files */,
 			);
@@ -250,7 +272,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				16A103281945B38300E595AB /* ViewController.m in Sources */,
+				16A1046719481D4F00E595AB /* DataProcess.m in Sources */,
+				16A104641946E79900E595AB /* QuestionTableViewCell.m in Sources */,
 				16A103221945B38300E595AB /* AppDelegate.m in Sources */,
+				16A104611946E52300E595AB /* QuestionTableViewController.m in Sources */,
+				161776101949798800D39A66 /* stackOverFlowData.xcdatamodeld in Sources */,
 				16A1031E1945B38300E595AB /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -456,6 +482,7 @@
 				16A103421945B38300E595AB /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		16A103431945B38300E595AB /* Build configuration list for PBXNativeTarget "StackyTests" */ = {
 			isa = XCConfigurationList;
@@ -464,8 +491,23 @@
 				16A103451945B38300E595AB /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		1617760E1949798800D39A66 /* stackOverFlowData.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				1617760F1949798800D39A66 /* stackOverFlowData.xcdatamodel */,
+			);
+			currentVersion = 1617760F1949798800D39A66 /* stackOverFlowData.xcdatamodel */;
+			name = stackOverFlowData.xcdatamodeld;
+			path = ../stackOverFlowData.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 16A103061945B38300E595AB /* Project object */;
 }
