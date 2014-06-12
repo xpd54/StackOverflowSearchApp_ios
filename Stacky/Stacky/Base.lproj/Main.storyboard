@@ -7,7 +7,6 @@
         <!--View Controller - Search On Stack Overflow-->
         <scene sceneID="ufC-wZ-h7g">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>
                 <viewController id="vXZ-lx-hvc" customClass="ViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="jyV-Pf-zRb"/>
@@ -64,8 +63,9 @@
                         <outlet property="searchText" destination="4hF-rV-exU" id="9Hg-TO-4KE"/>
                     </connections>
                 </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-406" y="264"/>
+            <point key="canvasLocation" x="-898" y="225"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="VJJ-1y-AC5">
@@ -80,7 +80,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="fLE-9A-ca2" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-827" y="247"/>
+            <point key="canvasLocation" x="-1301" y="225"/>
         </scene>
         <!--Question Table View Controller-->
         <scene sceneID="TV5-N6-C0T">
@@ -99,7 +99,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Lj9-4x-zvL" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1" y="264"/>
+            <point key="canvasLocation" x="-514" y="225"/>
         </scene>
     </scenes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
