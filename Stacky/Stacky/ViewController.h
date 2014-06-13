@@ -12,5 +12,5 @@
 - (IBAction)exitButton:(id)sender;
 - (IBAction)searchButton:(id)sender;
 - (IBAction)backGroundTap:(id)sender;
-
+- (IBAction)helpButton:(id)sender;
 @end

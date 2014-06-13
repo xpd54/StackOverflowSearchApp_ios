@@ -55,11 +55,13 @@ static NSString *CellIdentifier = @"CellIdentifier";
             NSLog(@"Can't Save! %@ %@", error, [error localizedDescription]);
         }
     }
-    gArray = [self fetcheDataFromDataBase:@"Question"];
 }
 
+// reading data from database and setting it for that object
 
-// reading data from database
+-(void) fetchAndSetData {
+    _data = [self fetcheDataFromDataBase:@"Question"];
+}
 
 -(NSArray *) fetcheDataFromDataBase : (NSString *) entityName {
     NSArray *fetchedData;
@@ -69,7 +71,9 @@ static NSString *CellIdentifier = @"CellIdentifier";
     return fetchedData;
 }
 
+
 //delete old data form data Base
+
 
 -(void) deleteOldData : (NSString *) entityName {
     NSManagedObjectContext *managedObjectContext = [self managedObjectContext];

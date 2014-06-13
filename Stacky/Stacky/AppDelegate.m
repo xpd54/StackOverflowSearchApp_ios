@@ -6,6 +6,7 @@
 //  Copyright (c) 2014 helpshift. All rights reserved.
 //
 #import "AppDelegate.h"
+#import "Helpshift.h"
 #import <CoreData/CoreData.h>
 @implementation AppDelegate
 
@@ -15,6 +16,10 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+    
+    
+    
+    [Helpshift installForApiKey:@"880734a9f861802a6508068ce44e38f2" domainName:@"ravi.helpshift.com" appID:@"ravi_platform_20140523104752299-27830ad9fb258dd"];
    // self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     // Override point for customization after application launch.
    // self.window.backgroundColor = [UIColor whiteColor];

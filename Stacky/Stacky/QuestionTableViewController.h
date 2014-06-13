@@ -5,8 +5,8 @@
 //  Created by Ravi Prakash on 10/06/14.
 //  Copyright (c) 2014 helpshift. All rights reserved.
 //
-
+#import "DataProcess.h"
 #import <UIKit/UIKit.h>
 @interface QuestionTableViewController : UITableViewController<UITableViewDataSource,UITableViewDelegate>
-@property (copy , nonatomic) NSArray *dataFromDataBase;
+@property (copy , nonatomic) DataProcess *getDataFromDataBase;
 @end

@@ -26,6 +26,8 @@ static NSString *CellIdentifier = @"CellIdentifier";
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    _getDataFromDataBase=[[DataProcess alloc] init];
+    [_getDataFromDataBase fetchAndSetData];
     UITableView *tableView = (id)[self.view viewWithTag:1];
     [tableView registerClass:[QuestionTableViewCell class] forCellReuseIdentifier:CellIdentifier];
     // other method call is here
@@ -37,14 +39,14 @@ static NSString *CellIdentifier = @"CellIdentifier";
 }
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return  [gArray count];
+    return  6;
 }
 
 -(UITableViewCell *) tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     QuestionTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-    NSManagedObject *device = [gArray objectAtIndex:indexPath.row];
-    cell.question = [device valueForKey:@"title"];
-    cell.answerCount = [device valueForKey:@"answer_count"];
+    NSManagedObject *queTable = [_getDataFromDataBase.data objectAtIndex:indexPath.row];
+    cell.question = [queTable valueForKey:@"title"];
+    cell.answerCount = [queTable valueForKey:@"answer_count"];
     return cell;
 }
 @end
