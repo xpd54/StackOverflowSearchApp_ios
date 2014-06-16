@@ -4,9 +4,10 @@
         <attribute name="accepted_answer_id" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="answer_count" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="question_id" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="search_string" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="title" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
     <elements>
-        <element name="Question" positionX="-63" positionY="-18" width="128" height="105"/>
+        <element name="Question" positionX="-99" positionY="-18" width="128" height="118"/>
     </elements>
 </model>

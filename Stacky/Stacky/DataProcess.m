@@ -6,7 +6,10 @@
 //  Copyright (c) 2014 helpshift. All rights reserved.
 //
 #import "DataProcess.h"
+#import "Reachability.h"
+#import "Alert.h"
 #import <CoreData/CoreData.h>
+NSString *gSearchString;
 @implementation DataProcess
 
 static NSString *CellIdentifier = @"CellIdentifier";
@@ -34,18 +37,27 @@ static NSString *CellIdentifier = @"CellIdentifier";
 //creating data and saving it in database
 
 -(void) createData:(NSString *)searchText : (NSString *)objecKey  {
-    NSString *apiCall = [self getApiCall:searchText];
-    NSData* responseData = [NSData dataWithContentsOfURL:[NSURL URLWithString:apiCall]];
-    [self saveDataInDataBase:[self fetchDataFromInternet:responseData :objecKey]];
-
+    gSearchString = [[NSString alloc] initWithString:searchText];// need to resolve further
+    if ([self checkInternetConnection]==YES) {
+        NSString *apiCall = [self getApiCall:searchText];
+        NSData* responseData = [NSData dataWithContentsOfURL:[NSURL URLWithString:apiCall]];
+        [self saveDataInDataBase:[self fetchDataFromInternet:responseData :objecKey] : searchText];
+        NSLog(@"%hhd",[self checkInternetConnection]);
+    } else {
+        NSLog(@"%hhd",[self checkInternetConnection]);
+        Alert *alertForNoInternet = [[Alert alloc] init];
+        [alertForNoInternet showAlertsForInterConnection];
+    }
 }
 
--(void) saveDataInDataBase : (NSArray *) dataFromInternate {
-    [self deleteOldData:@"Question"]; // delete old data from data base
+-(void) saveDataInDataBase : (NSArray *) dataFromInternate : (NSString *)searchText {
+    //delete old data and update with new one
+    [self deleteOldData:@"Question" :searchText];
     for(int i = 0; i < [dataFromInternate count];i++) {
         NSManagedObjectContext *context = [self managedObjectContext];
         NSManagedObject *newQuestion = [NSEntityDescription insertNewObjectForEntityForName:@"Question" inManagedObjectContext:context];
         NSDictionary *currentData = [dataFromInternate objectAtIndex:i];
+        [newQuestion setValue:searchText forKey:@"search_string"];
         [newQuestion setValue:[NSString stringWithFormat:@"%@",[currentData objectForKey:@"title"]]  forKey:@"title"];
         [newQuestion setValue:[NSString stringWithFormat:@"%@",[currentData objectForKey:@"question_id"]]  forKey:@"question_id"];
         [newQuestion setValue:[NSString stringWithFormat:@"%@",[currentData objectForKey:@"answer_count"]]  forKey:@"answer_count"];
@@ -58,27 +70,36 @@ static NSString *CellIdentifier = @"CellIdentifier";
 }
 
 // reading data from database and setting it for that object
-
 -(void) fetchAndSetData {
-    _data = [self fetcheDataFromDataBase:@"Question"];
+    _data = [self fetcheDataFromDataBase:@"Question": gSearchString];
+    if([_data count] == 0) {
+        Alert *dataMissing = [[Alert alloc] init];
+        [dataMissing showDatabaseMissingWithSearchText:gSearchString];
+    }
 }
 
--(NSArray *) fetcheDataFromDataBase : (NSString *) entityName {
-    NSArray *fetchedData;
-    NSManagedObjectContext *managedObjectContext = [self managedObjectContext];
-    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:entityName];
-    fetchedData = [[managedObjectContext executeFetchRequest:fetchRequest error:nil] mutableCopy];
-    return fetchedData;
+-(NSArray *) fetcheDataFromDataBase : (NSString *) entityName : (NSString *)searchText {
+    NSArray *result;
+    NSManagedObjectContext *context = [self managedObjectContext];
+    NSEntityDescription *entityDescription = [NSEntityDescription entityForName:entityName inManagedObjectContext:context];
+    NSFetchRequest *request = [[NSFetchRequest alloc] init];
+    [request setEntity:entityDescription];
+    [request setPredicate:[NSPredicate predicateWithFormat:@"search_string == %@",searchText]];
+    NSError *error = nil;
+    result = [context executeFetchRequest:request error:&error];
+    return result;
 }
 
 
 //delete old data form data Base
 
 
--(void) deleteOldData : (NSString *) entityName {
+-(void) deleteOldData : (NSString *) entityName :(NSString *)searchText {
     NSManagedObjectContext *managedObjectContext = [self managedObjectContext];
     NSFetchRequest *allQuestion = [[NSFetchRequest alloc] init];
+    
     [allQuestion setEntity:[NSEntityDescription entityForName:@"Question" inManagedObjectContext:managedObjectContext]];
+    [allQuestion setPredicate:[NSPredicate predicateWithFormat:@"search_string == %@",searchText]];
     [allQuestion setIncludesPropertyValues:NO]; //only fetch the managedObjectID
     NSError * error = nil;
     NSArray * questions = [managedObjectContext executeFetchRequest:allQuestion error:&error];
@@ -99,5 +120,19 @@ static NSString *CellIdentifier = @"CellIdentifier";
         context = [delegate managedObjectContext];
     }
     return context;
+}
+
+
+//check Internet connection
+
+-(BOOL) checkInternetConnection {
+    Reachability *network = [Reachability reachabilityWithHostName:@"stackexchange.com"];
+    NetworkStatus netStatus = [network currentReachabilityStatus];
+    if (netStatus == NotReachable) {
+        return NO;
+    }
+    else
+        return YES;
+    
 }
 @end

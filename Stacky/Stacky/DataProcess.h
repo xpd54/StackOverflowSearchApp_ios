@@ -14,6 +14,6 @@
 -(NSString *) getApiCall : (NSString *) userTextForSearch;
 -(NSArray *) fetchDataFromInternet : (NSData *)responseData : (NSString *)objectKey;
 -(void) createData: (NSString *)searchText : (NSString *)objecKey;
--(NSArray *) fetcheDataFromDataBase : (NSString *) entityName;
+-(NSArray *) fetcheDataFromDataBase : (NSString *) entityName : (NSString *)searchText;
 -(void) fetchAndSetData;
 @end

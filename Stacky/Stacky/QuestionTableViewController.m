@@ -39,7 +39,7 @@ static NSString *CellIdentifier = @"CellIdentifier";
 }
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return  6;
+    return  [_getDataFromDataBase.data count];
 }
 
 -(UITableViewCell *) tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -47,6 +47,12 @@ static NSString *CellIdentifier = @"CellIdentifier";
     NSManagedObject *queTable = [_getDataFromDataBase.data objectAtIndex:indexPath.row];
     cell.question = [queTable valueForKey:@"title"];
     cell.answerCount = [queTable valueForKey:@"answer_count"];
+    
+    
+    
+    //NSLog(@"%i",indexPath.row);
+    //NSLog(@"%@",[queTable valueForKey:@"search_string"]);
     return cell;
 }
+
 @end

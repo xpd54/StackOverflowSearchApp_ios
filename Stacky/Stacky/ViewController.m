@@ -45,22 +45,9 @@
 
 // getting search text from user 
 
--(void) showAlertsForInterConnection {
-    UIAlertView *internetConnectionAlert = [[UIAlertView alloc] initWithTitle:@"Internet Connection" message:@"You don't have Internet Connection \n Try Again" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
-    [internetConnectionAlert show];
-}
-
-
 - (IBAction)searchButton:(id)sender {
-    [self.view endEditing:YES];
     DataProcess *dataFromInternet = [[DataProcess alloc] init];
-    Reachability *networkReachability = [Reachability reachabilityForInternetConnection];
-    NetworkStatus networkStatus = [networkReachability currentReachabilityStatus];
-    if (networkStatus == NotReachable) {
-        [self showAlertsForInterConnection];
-    } else {
-        [dataFromInternet createData: self.searchText.text :@"items"];
-    }
+    [dataFromInternet createData: self.searchText.text :@"items"];
 }
 
 @end
