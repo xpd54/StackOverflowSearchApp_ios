@@ -81,7 +81,6 @@ static NSString *CellIdentifier = @"CellIdentifier";
             [dataMissing showErrorForNoSearchData];
             return;
         }
-        [dataMissing showDatabaseMissingWithSearchText:gSearchString];
     }
 }
 

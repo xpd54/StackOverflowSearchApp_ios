@@ -46,6 +46,7 @@
 
 - (IBAction)searchButton:(id)sender {
     DataProcess *dataFromInternet = [[DataProcess alloc] init];
+    //[self performSegueWithIdentifier:@"questionList" sender:self];
     [dataFromInternet createData: self.searchText.text :@"items"];
 }
 

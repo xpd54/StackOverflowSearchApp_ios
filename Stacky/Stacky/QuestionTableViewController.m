@@ -51,11 +51,6 @@ static NSString *CellIdentifier = @"CellIdentifier";
     NSManagedObject *queTable = [_getDataFromDataBase.data objectAtIndex:indexPath.row];
     cell.question = [queTable valueForKey:@"title"];
     cell.answerCount = [queTable valueForKey:@"answer_count"];
-    
-    
-    
-    //NSLog(@"%i",indexPath.row);
-    //NSLog(@"%@",[queTable valueForKey:@"search_string"]);
     return cell;
 }
 -(void) tableView:(UITableView *)tableView didDeselectRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -66,8 +61,6 @@ static NSString *CellIdentifier = @"CellIdentifier";
     [self loadUIWebView:currentURL];
     NSLog(@"%@",questionId);
 }
-
-
 - (void)loadUIWebView : (NSString *) currentURL {
     InternetConnection *connection = [[InternetConnection alloc]init];
         if ([connection checkInternetConnection]) {
