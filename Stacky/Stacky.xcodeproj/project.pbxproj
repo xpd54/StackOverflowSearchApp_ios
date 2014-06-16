@@ -45,6 +45,8 @@
 		161776671949C80000D39A66 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 161776661949C80000D39A66 /* libz.dylib */; };
 		161776871949DE5A00D39A66 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 161776861949DE5A00D39A66 /* Reachability.m */; };
 		161ACAF619488F8200A77DC1 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 161ACAF519488F8200A77DC1 /* CoreData.framework */; };
+		1623D5A9194EBFE8001E3D9F /* Alert.m in Sources */ = {isa = PBXBuildFile; fileRef = 1623D5A8194EBFE8001E3D9F /* Alert.m */; };
+		1623D5BD194F0E3C001E3D9F /* InternetConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = 1623D5BC194F0E3C001E3D9F /* InternetConnection.m */; };
 		16A103121945B38300E595AB /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 16A103111945B38300E595AB /* Foundation.framework */; };
 		16A103141945B38300E595AB /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 16A103131945B38300E595AB /* CoreGraphics.framework */; };
 		16A103161945B38300E595AB /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 16A103151945B38300E595AB /* UIKit.framework */; };
@@ -126,6 +128,10 @@
 		161776851949DE5A00D39A66 /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
 		161776861949DE5A00D39A66 /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
 		161ACAF519488F8200A77DC1 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
+		1623D5A7194EBFE8001E3D9F /* Alert.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Alert.h; sourceTree = "<group>"; };
+		1623D5A8194EBFE8001E3D9F /* Alert.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Alert.m; sourceTree = "<group>"; };
+		1623D5BB194F0E3C001E3D9F /* InternetConnection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InternetConnection.h; sourceTree = "<group>"; };
+		1623D5BC194F0E3C001E3D9F /* InternetConnection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InternetConnection.m; sourceTree = "<group>"; };
 		16A1030E1945B38300E595AB /* Stacky.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Stacky.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		16A103111945B38300E595AB /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		16A103131945B38300E595AB /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -246,6 +252,17 @@
 			path = HSThemes;
 			sourceTree = "<group>";
 		};
+		1623D5BE194F0FA1001E3D9F /* InternetConnection */ = {
+			isa = PBXGroup;
+			children = (
+				161776851949DE5A00D39A66 /* Reachability.h */,
+				161776861949DE5A00D39A66 /* Reachability.m */,
+				1623D5BB194F0E3C001E3D9F /* InternetConnection.h */,
+				1623D5BC194F0E3C001E3D9F /* InternetConnection.m */,
+			);
+			name = InternetConnection;
+			sourceTree = "<group>";
+		};
 		16A103051945B38300E595AB = {
 			isa = PBXGroup;
 			children = (
@@ -286,15 +303,16 @@
 		16A103171945B38300E595AB /* Stacky */ = {
 			isa = PBXGroup;
 			children = (
+				1623D5BE194F0FA1001E3D9F /* InternetConnection */,
 				161776111949C67F00D39A66 /* helpshift-sdk-ios-v4.5.0 */,
 				16A103201945B38300E595AB /* AppDelegate.h */,
 				16A103211945B38300E595AB /* AppDelegate.m */,
-				161776851949DE5A00D39A66 /* Reachability.h */,
-				161776861949DE5A00D39A66 /* Reachability.m */,
 				16A103231945B38300E595AB /* Main.storyboard */,
 				1617760E1949798800D39A66 /* stackOverFlowData.xcdatamodeld */,
 				16A103261945B38300E595AB /* ViewController.h */,
 				16A103271945B38300E595AB /* ViewController.m */,
+				1623D5A7194EBFE8001E3D9F /* Alert.h */,
+				1623D5A8194EBFE8001E3D9F /* Alert.m */,
 				16A104621946E79900E595AB /* QuestionTableViewCell.h */,
 				16A104631946E79900E595AB /* QuestionTableViewCell.m */,
 				16A1045F1946E52300E595AB /* QuestionTableViewController.h */,
@@ -472,6 +490,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1623D5BD194F0E3C001E3D9F /* InternetConnection.m in Sources */,
+				1623D5A9194EBFE8001E3D9F /* Alert.m in Sources */,
 				16A103281945B38300E595AB /* ViewController.m in Sources */,
 				16A1046719481D4F00E595AB /* DataProcess.m in Sources */,
 				161776871949DE5A00D39A66 /* Reachability.m in Sources */,

@@ -9,4 +9,5 @@
 #import <UIKit/UIKit.h>
 @interface QuestionTableViewController : UITableViewController<UITableViewDataSource,UITableViewDelegate>
 @property (copy , nonatomic) DataProcess *getDataFromDataBase;
+
 @end

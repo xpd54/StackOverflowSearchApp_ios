@@ -8,7 +8,6 @@
 #import "ViewController.h"
 #import "DataProcess.h"
 #import "Helpshift.h"
-#import "Reachability.h"
 @interface ViewController ()
 
 @end

@@ -12,4 +12,5 @@
 -(void) showAlertsForInterConnection;
 -(void) showDatabaseMissingWithSearchText:(NSString *)searchText ;
 -(void) showOfflineResultWithSearchText:(NSString *)searchText;
+-(void) showErrorForNoSearchData;
 @end

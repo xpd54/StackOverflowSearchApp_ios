@@ -15,7 +15,7 @@
 }
 
 -(void) showDatabaseMissingWithSearchText:(NSString *)searchText {
-    NSString *popupMessage = [[NSString alloc] initWithFormat:@"You Don't Have Any Offline Data %@",searchText];
+    NSString *popupMessage = [[NSString alloc] initWithFormat:@"You Don't Have Any Offline Data For %@",searchText];
     UIAlertView *databaseMissing = [[UIAlertView alloc] initWithTitle:@"Database Missing" message:popupMessage delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
     [databaseMissing show];
 }
@@ -25,4 +25,10 @@
     UIAlertView *offlineResult = [[UIAlertView alloc] initWithTitle:@"Offline Data" message:popupMessage delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
     [offlineResult show];
 }
+
+-(void) showErrorForNoSearchData {
+    UIAlertView *error = [[UIAlertView alloc] initWithTitle:@"Error" message:@"No Search Data Found" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+    [error show];
+}
+
 @end

@@ -8,6 +8,8 @@
 #import <CoreData/CoreData.h>
 #import "QuestionTableViewController.h"
 #import "QuestionTableViewCell.h"
+#import "InternetConnection.h"
+#import "Alert.h"
 #import "DataProcess.h"
 @interface QuestionTableViewController ()
 @end
@@ -26,6 +28,8 @@ static NSString *CellIdentifier = @"CellIdentifier";
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    self.tableView.delegate = self;
+    // getting data from database
     _getDataFromDataBase=[[DataProcess alloc] init];
     [_getDataFromDataBase fetchAndSetData];
     UITableView *tableView = (id)[self.view viewWithTag:1];
@@ -54,5 +58,25 @@ static NSString *CellIdentifier = @"CellIdentifier";
     //NSLog(@"%@",[queTable valueForKey:@"search_string"]);
     return cell;
 }
+-(void) tableView:(UITableView *)tableView didDeselectRowAtIndexPath:(NSIndexPath *)indexPath {
+    NSManagedObject *que = [_getDataFromDataBase.data objectAtIndex:indexPath.row];
+    NSString *questionId = [que valueForKey:@"question_id"];
+    NSString *currentURL = @"http://stackoverflow.com/questions/";
+    currentURL = [currentURL stringByAppendingString:questionId];
+    [self loadUIWebView:currentURL];
+    NSLog(@"%@",questionId);
+}
 
+
+- (void)loadUIWebView : (NSString *) currentURL {
+    InternetConnection *connection = [[InternetConnection alloc]init];
+        if ([connection checkInternetConnection]) {
+        UIWebView *webView = [[UIWebView alloc] initWithFrame:self.view.bounds];
+        [webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:currentURL]]];
+        [self.view addSubview:webView];
+    } else {
+        Alert *noInternet = [[Alert alloc] init];
+        [noInternet showAlertsForInterConnection];
+    }
+}
 @end

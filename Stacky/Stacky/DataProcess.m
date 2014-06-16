@@ -6,7 +6,7 @@
 //  Copyright (c) 2014 helpshift. All rights reserved.
 //
 #import "DataProcess.h"
-#import "Reachability.h"
+#import "InternetConnection.h"
 #import "Alert.h"
 #import <CoreData/CoreData.h>
 NSString *gSearchString;
@@ -38,15 +38,14 @@ static NSString *CellIdentifier = @"CellIdentifier";
 
 -(void) createData:(NSString *)searchText : (NSString *)objecKey  {
     gSearchString = [[NSString alloc] initWithString:searchText];// need to resolve further
-    if ([self checkInternetConnection]==YES) {
+    InternetConnection *connection = [[InternetConnection alloc] init];
+    if ([connection checkInternetConnection]==YES) {
         NSString *apiCall = [self getApiCall:searchText];
         NSData* responseData = [NSData dataWithContentsOfURL:[NSURL URLWithString:apiCall]];
         [self saveDataInDataBase:[self fetchDataFromInternet:responseData :objecKey] : searchText];
-        NSLog(@"%hhd",[self checkInternetConnection]);
+        NSLog(@"%hhd",[connection checkInternetConnection]);
     } else {
-        NSLog(@"%hhd",[self checkInternetConnection]);
-        Alert *alertForNoInternet = [[Alert alloc] init];
-        [alertForNoInternet showAlertsForInterConnection];
+        NSLog(@"%hhd",[connection checkInternetConnection]);
     }
 }
 
@@ -74,6 +73,14 @@ static NSString *CellIdentifier = @"CellIdentifier";
     _data = [self fetcheDataFromDataBase:@"Question": gSearchString];
     if([_data count] == 0) {
         Alert *dataMissing = [[Alert alloc] init];
+        InternetConnection *connection = [[InternetConnection alloc] init];
+        if ([connection checkInternetConnection]==NO) {
+            [dataMissing showAlertsForInterConnection];
+        }
+        else {
+            [dataMissing showErrorForNoSearchData];
+            return;
+        }
         [dataMissing showDatabaseMissingWithSearchText:gSearchString];
     }
 }
@@ -120,19 +127,5 @@ static NSString *CellIdentifier = @"CellIdentifier";
         context = [delegate managedObjectContext];
     }
     return context;
-}
-
-
-//check Internet connection
-
--(BOOL) checkInternetConnection {
-    Reachability *network = [Reachability reachabilityWithHostName:@"stackexchange.com"];
-    NetworkStatus netStatus = [network currentReachabilityStatus];
-    if (netStatus == NotReachable) {
-        return NO;
-    }
-    else
-        return YES;
-    
 }
 @end
