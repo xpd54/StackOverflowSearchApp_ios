@@ -8,6 +8,8 @@
 #import "ViewController.h"
 #import "DataProcess.h"
 #import "Helpshift.h"
+#import "InternetConnection.h"
+#import "Alert.h"
 @interface ViewController ()
 
 @end
@@ -46,8 +48,20 @@
 
 - (IBAction)searchButton:(id)sender {
     DataProcess *dataFromInternet = [[DataProcess alloc] init];
-    //[self performSegueWithIdentifier:@"questionList" sender:self];
-    [dataFromInternet createData: self.searchText.text :@"items"];
+    BOOL isDataFound = [dataFromInternet createData:self.searchText.text :@"items" :@"Question"];
+    if (isDataFound == YES) {
+        [self performSegueWithIdentifier:@"moveToQuestionList" sender:sender];
+    }
+    else {
+        InternetConnection *connection = [[InternetConnection alloc] init];
+        if ([connection checkInternetConnection] == YES) {
+            Alert *noDataForSearch = [[Alert alloc] init];
+            [noDataForSearch showErrorForNoSearchData];
+        } else {
+            Alert *noInternetConnection = [[Alert alloc] init];
+            [noInternetConnection showAlertsForInterConnection];
+        }
+    }
 }
 
 @end

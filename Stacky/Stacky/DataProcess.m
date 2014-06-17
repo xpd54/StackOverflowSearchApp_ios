@@ -36,7 +36,7 @@ static NSString *CellIdentifier = @"CellIdentifier";
 
 //creating data and saving it in database
 
--(void) createData:(NSString *)searchText : (NSString *)objecKey  {
+-(BOOL) createData:(NSString *)searchText : (NSString *)objecKey :(NSString *)entityName {
     gSearchString = [[NSString alloc] initWithString:searchText];// need to resolve further
     InternetConnection *connection = [[InternetConnection alloc] init];
     if ([connection checkInternetConnection]==YES) {
@@ -45,8 +45,16 @@ static NSString *CellIdentifier = @"CellIdentifier";
         [self saveDataInDataBase:[self fetchDataFromInternet:responseData :objecKey] : searchText];
         NSLog(@"%hhd",[connection checkInternetConnection]);
     } else {
+        // check if searchText is in data base or not
+        NSArray *local = [self fetcheDataFromDataBase:entityName  :searchText];
+        if ([local count] > 0) {
+            return YES;
+        } else {
+            return NO;
+        }
         NSLog(@"%hhd",[connection checkInternetConnection]);
     }
+    return YES;
 }
 
 -(void) saveDataInDataBase : (NSArray *) dataFromInternate : (NSString *)searchText {
