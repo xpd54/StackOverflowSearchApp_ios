@@ -53,7 +53,7 @@ static NSString *CellIdentifier = @"CellIdentifier";
     cell.answerCount = [queTable valueForKey:@"answer_count"];
     return cell;
 }
--(void) tableView:(UITableView *)tableView didDeselectRowAtIndexPath:(NSIndexPath *)indexPath {
+-(void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     NSManagedObject *que = [_getDataFromDataBase.data objectAtIndex:indexPath.row];
     NSString *questionId = [que valueForKey:@"question_id"];
     NSString *currentURL = @"http://stackoverflow.com/questions/";
@@ -64,12 +64,18 @@ static NSString *CellIdentifier = @"CellIdentifier";
 - (void)loadUIWebView : (NSString *) currentURL {
     InternetConnection *connection = [[InternetConnection alloc]init];
         if ([connection checkInternetConnection]) {
-        UIWebView *webView = [[UIWebView alloc] initWithFrame:self.view.bounds];
-        [webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:currentURL]]];
-        [self.view addSubview:webView];
+            UIWebView *webView = [[UIWebView alloc] initWithFrame:self.view.bounds];
+            [webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:currentURL]]];
+            NSLog(@"%@",webView);
+            webView.tag = 2;
+            [self.view addSubview:webView];
     } else {
         Alert *noInternet = [[Alert alloc] init];
         [noInternet showAlertsForInterConnection];
     }
+}
+- (IBAction)close:(id)sender {
+    UIView *viewToRemove = [self.view viewWithTag:2];
+    [viewToRemove removeFromSuperview];
 }
 @end

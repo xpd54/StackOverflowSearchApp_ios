@@ -36,25 +36,32 @@ static NSString *CellIdentifier = @"CellIdentifier";
 
 //creating data and saving it in database
 
--(BOOL) createData:(NSString *)searchText : (NSString *)objecKey :(NSString *)entityName {
+-(NSString *) createDataAndAck:(NSString *)searchText : (NSString *)objecKey :(NSString *)entityName {
     gSearchString = [[NSString alloc] initWithString:searchText];// need to resolve further
     InternetConnection *connection = [[InternetConnection alloc] init];
+    NSString *yes = @"yes";
+    NSString *no = @"no";
     if ([connection checkInternetConnection]==YES) {
         NSString *apiCall = [self getApiCall:searchText];
         NSData* responseData = [NSData dataWithContentsOfURL:[NSURL URLWithString:apiCall]];
         [self saveDataInDataBase:[self fetchDataFromInternet:responseData :objecKey] : searchText];
-        NSLog(@"%hhd",[connection checkInternetConnection]);
-    } else {
-        // check if searchText is in data base or not
-        NSArray *local = [self fetcheDataFromDataBase:entityName  :searchText];
+        
+        NSArray *local = [self fetcheDataFromDataBase:entityName :searchText];
         if ([local count] > 0) {
-            return YES;
-        } else {
-            return NO;
+            return yes;
         }
-        NSLog(@"%hhd",[connection checkInternetConnection]);
+        else {
+            return no;
+        }
+    } else {
+        NSArray *local = [self fetcheDataFromDataBase:entityName :searchText];
+        if ([local count] > 0) {
+            return yes;
+        } else {
+            return no;
+        }
     }
-    return YES;
+    return no;
 }
 
 -(void) saveDataInDataBase : (NSArray *) dataFromInternate : (NSString *)searchText {

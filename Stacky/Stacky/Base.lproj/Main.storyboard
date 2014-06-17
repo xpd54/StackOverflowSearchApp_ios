@@ -7,7 +7,7 @@
         <!--View Controller - Search On Stack Overflow-->
         <scene sceneID="ufC-wZ-h7g">
             <objects>
-                <viewController id="vXZ-lx-hvc" customClass="ViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="searchBox" useStoryboardIdentifierAsRestorationIdentifier="YES" id="vXZ-lx-hvc" customClass="ViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="jyV-Pf-zRb"/>
                         <viewControllerLayoutGuide type="bottom" id="2fi-mo-0CV"/>
@@ -34,7 +34,6 @@
                                 </state>
                                 <connections>
                                     <action selector="searchButton:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="OVX-Wx-GEG"/>
-                                    <segue destination="Oji-Vr-7Rc" kind="push" id="3xU-Vb-uHL"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="20q-G9-LJO">
@@ -74,16 +73,19 @@
                     <navigationItem key="navigationItem" title="Search On Stack Overflow" id="j2b-fX-tVv"/>
                     <connections>
                         <outlet property="searchText" destination="4hF-rV-exU" id="9Hg-TO-4KE"/>
+                        <segue destination="Oji-Vr-7Rc" kind="push" identifier="moveToQuestionList" id="qPr-E6-G2u"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-957" y="190"/>
+            <point key="canvasLocation" x="-1984" y="443"/>
         </scene>
-        <!--Navigation Controller-->
+        <!--Navigation Controller - Item-->
         <scene sceneID="VJJ-1y-AC5">
             <objects>
                 <navigationController definesPresentationContext="YES" id="Vim-Ex-LSv" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Item" id="Vfh-9K-hhO"/>
+                    <navigationItem key="navigationItem" id="1B3-Fi-ZYv"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="4HS-Ni-cYX">
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -93,26 +95,40 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="fLE-9A-ca2" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1301" y="225"/>
+            <point key="canvasLocation" x="-2371" y="443"/>
         </scene>
-        <!--Question Table View Controller-->
+        <!--Question Table View Controller - Question List-->
         <scene sceneID="TV5-N6-C0T">
             <objects>
-                <tableViewController id="Oji-Vr-7Rc" customClass="QuestionTableViewController" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="questionList" id="Oji-Vr-7Rc" customClass="QuestionTableViewController" sceneMemberID="viewController">
                     <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" tag="1" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="95" sectionHeaderHeight="22" sectionFooterHeight="22" id="vZ7-Zz-4cG">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <tabBar key="tableFooterView" contentMode="scaleToFill" id="Shd-g3-EHG">
+                            <rect key="frame" x="0.0" y="64" width="320" height="49"/>
+                            <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
+                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                            <items/>
+                        </tabBar>
                         <connections>
                             <outlet property="dataSource" destination="Oji-Vr-7Rc" id="lMq-HG-Kwc"/>
                             <outlet property="delegate" destination="Oji-Vr-7Rc" id="HeM-lz-pMT"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" id="aoy-Bs-S1g"/>
+                    <navigationItem key="navigationItem" title="Question List" id="aoy-Bs-S1g">
+                        <barButtonItem key="rightBarButtonItem" style="done" systemItem="done" id="B0h-Bc-1AG">
+                            <color key="tintColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                            <connections>
+                                <action selector="close:" destination="Oji-Vr-7Rc" id="JHm-N2-ugZ"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Lj9-4x-zvL" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-591" y="190"/>
+            <point key="canvasLocation" x="-1616" y="453"/>
         </scene>
     </scenes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">

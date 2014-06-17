@@ -13,7 +13,7 @@
 @property (copy , nonatomic) NSArray *data;
 -(NSString *) getApiCall : (NSString *) userTextForSearch;
 -(NSArray *) fetchDataFromInternet : (NSData *)responseData : (NSString *)objectKey;
--(BOOL) createData: (NSString *)searchText : (NSString *)objecKey :(NSString *)entityName;
+-(NSString *) createDataAndAck: (NSString *)searchText : (NSString *)objecKey :(NSString *)entityName;
 -(NSArray *) fetcheDataFromDataBase : (NSString *) entityName : (NSString *)searchText;
 -(void) fetchAndSetData;
 @end

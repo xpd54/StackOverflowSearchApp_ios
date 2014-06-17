@@ -8,6 +8,8 @@
 #import <UIKit/UIKit.h>
 #import "QuestionTableViewController.h"
 @interface ViewController : UIViewController
+@property NSString *isDataFound;
+@property UIActivityIndicatorView *activityIndicator;
 @property (strong, nonatomic) IBOutlet UITextField *searchText;
 - (IBAction)exitButton:(id)sender;
 - (IBAction)searchButton:(id)sender;

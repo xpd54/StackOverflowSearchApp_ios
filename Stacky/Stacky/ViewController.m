@@ -44,15 +44,34 @@
     exit(0);
 }
 
-// getting search text from user 
 
-- (IBAction)searchButton:(id)sender {
+-(void) activityIndicator : (NSString *) show {
+
+    [self.view addSubview:_activityIndicator];
+    if ([show isEqualToString:@"yes"]) {
+        [_activityIndicator startAnimating];
+    } else {
+        _activityIndicator.hidden = YES;
+        [_activityIndicator stopAnimating];
+    }
+}
+
+-(void) dataFromInternet {
     DataProcess *dataFromInternet = [[DataProcess alloc] init];
-    BOOL isDataFound = [dataFromInternet createData:self.searchText.text :@"items" :@"Question"];
-    if (isDataFound == YES) {
+    _isDataFound = [NSString stringWithString:[dataFromInternet createDataAndAck:self.searchText.text :@"items" :@"Question"]];
+}
+
+// getting search text from user
+- (IBAction)searchButton:(id)sender {
+    _activityIndicator = [[UIActivityIndicatorView alloc] initWithFrame:CGRectMake(self.view.center.x,self.view.center.y, 0.0f, 0.0f)];
+    [_activityIndicator setActivityIndicatorViewStyle:UIActivityIndicatorViewStyleWhiteLarge];
+    
+    
+    [self dataFromInternet];
+    if ([_isDataFound isEqualToString:@"yes"]) {
         [self performSegueWithIdentifier:@"moveToQuestionList" sender:sender];
     }
-    else {
+    if ([_isDataFound isEqualToString:@"no"]) {
         InternetConnection *connection = [[InternetConnection alloc] init];
         if ([connection checkInternetConnection] == YES) {
             Alert *noDataForSearch = [[Alert alloc] init];
