@@ -45,6 +45,7 @@
 		161776671949C80000D39A66 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 161776661949C80000D39A66 /* libz.dylib */; };
 		161776871949DE5A00D39A66 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 161776861949DE5A00D39A66 /* Reachability.m */; };
 		161ACAF619488F8200A77DC1 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 161ACAF519488F8200A77DC1 /* CoreData.framework */; };
+		161F3CEF19518FD700BD39EB /* viewIndicatorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 161F3CEE19518FD700BD39EB /* viewIndicatorViewController.m */; };
 		1623D5A9194EBFE8001E3D9F /* Alert.m in Sources */ = {isa = PBXBuildFile; fileRef = 1623D5A8194EBFE8001E3D9F /* Alert.m */; };
 		1623D5BD194F0E3C001E3D9F /* InternetConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = 1623D5BC194F0E3C001E3D9F /* InternetConnection.m */; };
 		16A103121945B38300E595AB /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 16A103111945B38300E595AB /* Foundation.framework */; };
@@ -128,6 +129,8 @@
 		161776851949DE5A00D39A66 /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
 		161776861949DE5A00D39A66 /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
 		161ACAF519488F8200A77DC1 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
+		161F3CED19518FD700BD39EB /* viewIndicatorViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = viewIndicatorViewController.h; sourceTree = "<group>"; };
+		161F3CEE19518FD700BD39EB /* viewIndicatorViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = viewIndicatorViewController.m; sourceTree = "<group>"; };
 		1623D5A7194EBFE8001E3D9F /* Alert.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Alert.h; sourceTree = "<group>"; };
 		1623D5A8194EBFE8001E3D9F /* Alert.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Alert.m; sourceTree = "<group>"; };
 		1623D5BB194F0E3C001E3D9F /* InternetConnection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InternetConnection.h; sourceTree = "<group>"; };
@@ -311,6 +314,8 @@
 				1617760E1949798800D39A66 /* stackOverFlowData.xcdatamodeld */,
 				16A103261945B38300E595AB /* ViewController.h */,
 				16A103271945B38300E595AB /* ViewController.m */,
+				161F3CED19518FD700BD39EB /* viewIndicatorViewController.h */,
+				161F3CEE19518FD700BD39EB /* viewIndicatorViewController.m */,
 				1623D5A7194EBFE8001E3D9F /* Alert.h */,
 				1623D5A8194EBFE8001E3D9F /* Alert.m */,
 				16A104621946E79900E595AB /* QuestionTableViewCell.h */,
@@ -499,6 +504,7 @@
 				16A103221945B38300E595AB /* AppDelegate.m in Sources */,
 				16A104611946E52300E595AB /* QuestionTableViewController.m in Sources */,
 				161776101949798800D39A66 /* stackOverFlowData.xcdatamodeld in Sources */,
+				161F3CEF19518FD700BD39EB /* viewIndicatorViewController.m in Sources */,
 				16A1031E1945B38300E595AB /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

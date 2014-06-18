@@ -10,6 +10,7 @@
 #import "Helpshift.h"
 #import "InternetConnection.h"
 #import "Alert.h"
+#import "viewIndicatorViewController.h"
 @interface ViewController ()
 
 @end
@@ -44,18 +45,6 @@
     exit(0);
 }
 
-
--(void) activityIndicator : (NSString *) show {
-
-    [self.view addSubview:_activityIndicator];
-    if ([show isEqualToString:@"yes"]) {
-        [_activityIndicator startAnimating];
-    } else {
-        _activityIndicator.hidden = YES;
-        [_activityIndicator stopAnimating];
-    }
-}
-
 -(void) dataFromInternet {
     DataProcess *dataFromInternet = [[DataProcess alloc] init];
     _isDataFound = [NSString stringWithString:[dataFromInternet createDataAndAck:self.searchText.text :@"items" :@"Question"]];
@@ -63,20 +52,23 @@
 
 // getting search text from user
 - (IBAction)searchButton:(id)sender {
-    _activityIndicator = [[UIActivityIndicatorView alloc] initWithFrame:CGRectMake(self.view.center.x,self.view.center.y, 0.0f, 0.0f)];
-    [_activityIndicator setActivityIndicatorViewStyle:UIActivityIndicatorViewStyleWhiteLarge];
+    viewIndicatorViewController *indicator = [[viewIndicatorViewController alloc] init];
     
-    
+    [indicator startAnimation:self];
     [self dataFromInternet];
+    
     if ([_isDataFound isEqualToString:@"yes"]) {
+        [indicator removeIndicator:self];
         [self performSegueWithIdentifier:@"moveToQuestionList" sender:sender];
     }
     if ([_isDataFound isEqualToString:@"no"]) {
         InternetConnection *connection = [[InternetConnection alloc] init];
         if ([connection checkInternetConnection] == YES) {
+            [indicator removeIndicator:self];
             Alert *noDataForSearch = [[Alert alloc] init];
             [noDataForSearch showErrorForNoSearchData];
         } else {
+            [indicator removeIndicator:self];
             Alert *noInternetConnection = [[Alert alloc] init];
             [noInternetConnection showAlertsForInterConnection];
         }

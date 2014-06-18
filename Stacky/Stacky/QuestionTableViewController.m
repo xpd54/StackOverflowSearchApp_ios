@@ -11,6 +11,7 @@
 #import "InternetConnection.h"
 #import "Alert.h"
 #import "DataProcess.h"
+#import "viewIndicatorViewController.h"
 @interface QuestionTableViewController ()
 @end
 
@@ -73,7 +74,6 @@ static NSString *CellIdentifier = @"CellIdentifier";
         UIWebView *webView = [[UIWebView alloc] initWithFrame:self.view.bounds];
         [webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:currentURL]]];
         webView.tag = 2;
-        //[self userChoiceView];
         [self.view addSubview:webView];
     } else {
         Alert *noInternet = [[Alert alloc] init];
@@ -128,31 +128,38 @@ static NSString *CellIdentifier = @"CellIdentifier";
 }
 
 -(IBAction)showFullAnswer:(id)sender {
-    NSLog(@"test");
+    viewIndicatorViewController *indicator = [[viewIndicatorViewController alloc] init];
     InternetConnection *connection = [[InternetConnection alloc]init];
+    UIView *choiceViewToRemove = [self.view viewWithTag:3];
+    [choiceViewToRemove removeFromSuperview];
+    [indicator startAnimation:self];
     if ([connection checkInternetConnection]) {
         UIWebView *webView = [[UIWebView alloc] initWithFrame:self.view.bounds];
         webView.tag = 2;
         [webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:_currentQuestionUrl]]];
-        UIView *choiceViewToRemove = [self.view viewWithTag:3];
-        [choiceViewToRemove removeFromSuperview];
+        [indicator removeIndicator:self];
         [self.view addSubview:webView];
     } else {
+        [indicator removeIndicator:self];
         Alert *noInternet = [[Alert alloc] init];
         [noInternet showAlertsForInterConnection];
     }
 
 }
 -(IBAction)showAcceptedAnswer:(id)sender {
+    viewIndicatorViewController *indicator = [[viewIndicatorViewController alloc]init];
     InternetConnection *connection = [[InternetConnection alloc]init];
+    UIView *choiceViewToRemove = [self.view viewWithTag:3];
+    [choiceViewToRemove removeFromSuperview];
+    [indicator startAnimation:self];
     if ([connection checkInternetConnection]) {
         UIWebView *webView = [[UIWebView alloc] initWithFrame:self.view.bounds];
         webView.tag = 2;
         [webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:_currentAcceptedAnswerUrl]]];
-        UIView *choiceViewToRemove = [self.view viewWithTag:3];
-        [choiceViewToRemove removeFromSuperview];
+        [indicator removeIndicator:self];
         [self.view addSubview:webView];
     } else {
+        [indicator removeIndicator:self];
         Alert *noInternet = [[Alert alloc] init];
         [noInternet showAlertsForInterConnection];
     }
