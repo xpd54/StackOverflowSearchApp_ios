@@ -133,12 +133,13 @@ static NSString *CellIdentifier = @"CellIdentifier";
     UIView *choiceViewToRemove = [self.view viewWithTag:3];
     [choiceViewToRemove removeFromSuperview];
     [indicator startAnimation:self];
+    sleep(1);
     if ([connection checkInternetConnection]) {
         UIWebView *webView = [[UIWebView alloc] initWithFrame:self.view.bounds];
         webView.tag = 2;
         [webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:_currentQuestionUrl]]];
-        [indicator removeIndicator:self];
         [self.view addSubview:webView];
+        [indicator removeIndicator:self];
     } else {
         [indicator removeIndicator:self];
         Alert *noInternet = [[Alert alloc] init];
@@ -152,12 +153,13 @@ static NSString *CellIdentifier = @"CellIdentifier";
     UIView *choiceViewToRemove = [self.view viewWithTag:3];
     [choiceViewToRemove removeFromSuperview];
     [indicator startAnimation:self];
+    sleep(1);
     if ([connection checkInternetConnection]) {
         UIWebView *webView = [[UIWebView alloc] initWithFrame:self.view.bounds];
         webView.tag = 2;
         [webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:_currentAcceptedAnswerUrl]]];
-        [indicator removeIndicator:self];
         [self.view addSubview:webView];
+        [indicator removeIndicator:self];
     } else {
         [indicator removeIndicator:self];
         Alert *noInternet = [[Alert alloc] init];
