@@ -9,6 +9,8 @@
 #import <UIKit/UIKit.h>
 @interface QuestionTableViewController : UITableViewController<UITableViewDataSource,UITableViewDelegate>
 @property (copy , nonatomic) DataProcess *getDataFromDataBase;
+@property NSString *currentQuestionUrl;
+@property NSString *currentAcceptedAnswerUrl;
 - (IBAction)close:(id)sender;
 
 @end

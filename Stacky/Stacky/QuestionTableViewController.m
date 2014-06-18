@@ -53,22 +53,105 @@ static NSString *CellIdentifier = @"CellIdentifier";
     cell.answerCount = [queTable valueForKey:@"answer_count"];
     return cell;
 }
+
 -(void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     NSManagedObject *que = [_getDataFromDataBase.data objectAtIndex:indexPath.row];
-    NSString *questionId = [que valueForKey:@"question_id"];
-    NSString *currentURL = @"http://stackoverflow.com/questions/";
-    currentURL = [currentURL stringByAppendingString:questionId];
-    [self loadUIWebView:currentURL];
-    NSLog(@"%@",questionId);
+    NSString *currentQuestionId = [que valueForKey:@"question_id"];
+    _currentQuestionUrl = @"http://stackoverflow.com/questions/";
+    _currentQuestionUrl = [_currentQuestionUrl stringByAppendingString:currentQuestionId];
+    
+    
+    NSString *acceptedAnswerId = [que valueForKeyPath:@"accepted_answer_id"];
+    _currentAcceptedAnswerUrl = @"http://stackoverflow.com/a/";
+    _currentAcceptedAnswerUrl = [_currentAcceptedAnswerUrl stringByAppendingString:acceptedAnswerId];
+    [self userChoiceView];
 }
+
 - (void)loadUIWebView : (NSString *) currentURL {
     InternetConnection *connection = [[InternetConnection alloc]init];
-        if ([connection checkInternetConnection]) {
-            UIWebView *webView = [[UIWebView alloc] initWithFrame:self.view.bounds];
-            [webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:currentURL]]];
-            NSLog(@"%@",webView);
-            webView.tag = 2;
-            [self.view addSubview:webView];
+    if ([connection checkInternetConnection]) {
+        UIWebView *webView = [[UIWebView alloc] initWithFrame:self.view.bounds];
+        [webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:currentURL]]];
+        webView.tag = 2;
+        //[self userChoiceView];
+        [self.view addSubview:webView];
+    } else {
+        Alert *noInternet = [[Alert alloc] init];
+        [noInternet showAlertsForInterConnection];
+    }
+}
+
+-(void) userChoiceView {
+    UIView *transparetSubView = [[UIView alloc] initWithFrame:self.view.bounds];
+    transparetSubView.tag = 3;
+    transparetSubView.backgroundColor = [UIColor blackColor];
+    transparetSubView.alpha = 0.8;
+    transparetSubView.opaque = NO;
+    
+    
+    UIColor *colorOfButtonBacground = [[UIColor alloc] initWithRed:1.0f green:1.0f blue:1.0f alpha:1.5f];
+    
+    //Button setting for all Answer button
+    
+    UIButton *choiceFullAnswer = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+    choiceFullAnswer.frame = CGRectMake(10, self.view.center.y, 140, 40);
+    choiceFullAnswer.tag = 4;
+    [choiceFullAnswer setShowsTouchWhenHighlighted:YES];
+    [choiceFullAnswer setTitle:@"All Answers" forState:UIControlStateNormal];
+    choiceFullAnswer.titleLabel.font = [UIFont fontWithName:@"Helvetica-Bold" size:16.0];
+    [choiceFullAnswer setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    [choiceFullAnswer setTitleColor:[UIColor greenColor] forState:UIControlStateHighlighted];
+    [choiceFullAnswer setBackgroundColor:colorOfButtonBacground];
+    [choiceFullAnswer addTarget:self action:@selector(showFullAnswer:) forControlEvents:UIControlEventTouchUpInside];
+    
+    //Button setting for accepted Answer
+    
+    UIButton *choiceAcceptedAnswer = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+    choiceAcceptedAnswer.frame = CGRectMake(170, self.view.center.y, 140, 40);
+    choiceAcceptedAnswer.tag = 5;
+    [choiceAcceptedAnswer setShowsTouchWhenHighlighted:YES];
+    [choiceAcceptedAnswer setTitle:@"Accepted Answer" forState:UIControlStateNormal];
+    choiceAcceptedAnswer.titleLabel.font = [UIFont fontWithName:@"Helvetica-Bold" size:16.0];
+    [choiceAcceptedAnswer setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    [choiceAcceptedAnswer setTitleColor:[UIColor greenColor] forState:UIControlStateHighlighted];
+    [choiceAcceptedAnswer setBackgroundColor:colorOfButtonBacground];
+    [choiceAcceptedAnswer addTarget:self action:@selector(showAcceptedAnswer:) forControlEvents:UIControlEventTouchUpInside];
+    
+    
+    [self.view addSubview:transparetSubView];
+    [transparetSubView addSubview:choiceAcceptedAnswer];
+    [transparetSubView addSubview:choiceFullAnswer];
+    
+    //stop scrolling of table View
+    
+    self.tableView.scrollEnabled = NO;
+}
+
+-(IBAction)showFullAnswer:(id)sender {
+    NSLog(@"test");
+    InternetConnection *connection = [[InternetConnection alloc]init];
+    if ([connection checkInternetConnection]) {
+        UIWebView *webView = [[UIWebView alloc] initWithFrame:self.view.bounds];
+        webView.tag = 2;
+        [webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:_currentQuestionUrl]]];
+        UIView *choiceViewToRemove = [self.view viewWithTag:3];
+        [choiceViewToRemove removeFromSuperview];
+        [self.view addSubview:webView];
+    } else {
+        Alert *noInternet = [[Alert alloc] init];
+        [noInternet showAlertsForInterConnection];
+    }
+
+}
+-(IBAction)showAcceptedAnswer:(id)sender {
+    InternetConnection *connection = [[InternetConnection alloc]init];
+    if ([connection checkInternetConnection]) {
+        UIWebView *webView = [[UIWebView alloc] initWithFrame:self.view.bounds];
+        webView.tag = 2;
+        [webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:_currentAcceptedAnswerUrl]]];
+        UIView *choiceViewToRemove = [self.view viewWithTag:3];
+        [choiceViewToRemove removeFromSuperview];
+        [self.view addSubview:webView];
     } else {
         Alert *noInternet = [[Alert alloc] init];
         [noInternet showAlertsForInterConnection];
@@ -76,6 +159,11 @@ static NSString *CellIdentifier = @"CellIdentifier";
 }
 - (IBAction)close:(id)sender {
     UIView *viewToRemove = [self.view viewWithTag:2];
+    UIView *choiceViewToRemove = [self.view viewWithTag:3];
     [viewToRemove removeFromSuperview];
+    [choiceViewToRemove removeFromSuperview];
+    
+    //scrolling view enable
+    self.tableView.scrollEnabled = YES;
 }
 @end
