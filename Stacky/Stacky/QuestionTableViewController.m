@@ -144,6 +144,8 @@ static NSString *CellIdentifier = @"CellIdentifier";
         [indicator removeIndicator:self];
         Alert *noInternet = [[Alert alloc] init];
         [noInternet showAlertsForInterConnection];
+        //reload the table view to remove previous selected cell
+        [self.tableView reloadData];
     }
 
 }
@@ -164,6 +166,8 @@ static NSString *CellIdentifier = @"CellIdentifier";
         [indicator removeIndicator:self];
         Alert *noInternet = [[Alert alloc] init];
         [noInternet showAlertsForInterConnection];
+        //reload the table view to remove previous selected cell
+        [self.tableView reloadData];
     }
 }
 - (IBAction)close:(id)sender {
