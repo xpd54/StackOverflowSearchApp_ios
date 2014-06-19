@@ -171,7 +171,8 @@ static NSString *CellIdentifier = @"CellIdentifier";
     UIView *choiceViewToRemove = [self.view viewWithTag:3];
     [viewToRemove removeFromSuperview];
     [choiceViewToRemove removeFromSuperview];
-    
+    //reload the table view to remove previous selected cell
+    [self.tableView reloadData];
     //scrolling view enable
     self.tableView.scrollEnabled = YES;
 }
