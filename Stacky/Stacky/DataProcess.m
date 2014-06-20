@@ -9,10 +9,13 @@
 #import "InternetConnection.h"
 #import "Alert.h"
 #import <CoreData/CoreData.h>
-NSString *gSearchString;
 @implementation DataProcess
+static NSString *searchStringFromUser;
 
-static NSString *CellIdentifier = @"CellIdentifier";
++(NSString *) getSearchString {
+    return searchStringFromUser;
+}
+
 
 -(NSString *) getApiCall : (NSString *) userTextForSearch {
     _beforeUserInput = @"http://api.stackexchange.com/2.2/search/advanced?order=desc&sort=activity&q=";
@@ -37,7 +40,7 @@ static NSString *CellIdentifier = @"CellIdentifier";
 //creating data and saving it in database
 
 -(NSString *) createDataAndAck:(NSString *)searchText : (NSString *)objecKey :(NSString *)entityName {
-    gSearchString = [[NSString alloc] initWithString:searchText];// need to resolve further
+    searchStringFromUser = [[NSString alloc] initWithString:searchText];// need to resolve further
     InternetConnection *connection = [[InternetConnection alloc] init];
     NSString *yes = @"yes";
     NSString *no = @"no";
@@ -85,7 +88,7 @@ static NSString *CellIdentifier = @"CellIdentifier";
 
 // reading data from database and setting it for that object
 -(void) fetchAndSetData {
-    _data = [self fetcheDataFromDataBase:@"Question": gSearchString];
+    _data = [self fetcheDataFromDataBase:@"Question": searchStringFromUser];
     if([_data count] == 0) {
         Alert *dataMissing = [[Alert alloc] init];
         InternetConnection *connection = [[InternetConnection alloc] init];

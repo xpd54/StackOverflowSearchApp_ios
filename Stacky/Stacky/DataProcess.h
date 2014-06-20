@@ -11,6 +11,7 @@
 @property (copy , nonatomic) NSString *afterUserInput;
 @property (copy , nonatomic) NSString *questionApiCallUrl;
 @property (copy , nonatomic) NSArray *data;
++(NSString *) getSearchString;
 -(NSString *) getApiCall : (NSString *) userTextForSearch;
 -(NSArray *) fetchDataFromInternet : (NSData *)responseData : (NSString *)objectKey;
 -(NSString *) createDataAndAck: (NSString *)searchText : (NSString *)objecKey :(NSString *)entityName;
