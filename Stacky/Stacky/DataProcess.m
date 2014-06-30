@@ -11,19 +11,28 @@
 #import <CoreData/CoreData.h>
 @implementation DataProcess
 static NSString *searchStringFromUser;
-
+static NSInteger page;
+static NSInteger pageSize;
 +(NSString *) getSearchString {
     return searchStringFromUser;
 }
 
++(NSInteger ) getPageValue {
+    return page;
+}
 
++(NSInteger ) getPageSize {
+    return pageSize;
+}
 -(NSString *) getApiCall : (NSString *) userTextForSearch {
-    _beforeUserInput = @"http://api.stackexchange.com/2.2/search/advanced?order=desc&sort=activity&q=";
+    _beforeUserInput = @"http://api.stackexchange.com/2.2/search/advanced?";
+    _beforeUserInput = [_beforeUserInput stringByAppendingFormat:@"page=%i&pagesize=%i&order=desc&sort=activity&q=",page,pageSize];
     _beforeUserInput = [_beforeUserInput stringByAppendingString:userTextForSearch];
     _afterUserInput = @"&accepted=True&site=stackoverflow&filter=!0S26i4L6gvyVQBhi(jD)OK210";
     _questionApiCallUrl = [_beforeUserInput stringByAppendingString:_afterUserInput];
     NSString *url = [_questionApiCallUrl stringByAddingPercentEscapesUsingEncoding:
                      NSASCIIStringEncoding]; // Encoding of url string
+    NSLog(@"%@",url);
     return url;
 }
 
@@ -39,8 +48,11 @@ static NSString *searchStringFromUser;
 
 //creating data and saving it in database
 
--(NSString *) createDataAndAck:(NSString *)searchText : (NSString *)objecKey :(NSString *)entityName {
+-(NSString *) createDataAndAck:(NSString *)searchText objectName: (NSString *)objecKey entityName:(NSString *)entityName withPageNumber: (NSInteger)pg andPageSize: (NSInteger)pgSz {
+    page = pg;
+    pageSize = pgSz;
     searchStringFromUser = [[NSString alloc] initWithString:searchText];// need to resolve further
+    
     InternetConnection *connection = [[InternetConnection alloc] init];
     NSString *yes = @"yes";
     NSString *no = @"no";

@@ -11,10 +11,14 @@
 @property (copy , nonatomic) NSString *afterUserInput;
 @property (copy , nonatomic) NSString *questionApiCallUrl;
 @property (copy , nonatomic) NSArray *data;
+//@property NSInteger page;
+//@property NSInteger pageSize;
 +(NSString *) getSearchString;
++(NSInteger ) getPageValue;
++(NSInteger ) getPageSize;
 -(NSString *) getApiCall : (NSString *) userTextForSearch;
 -(NSArray *) fetchDataFromInternet : (NSData *)responseData : (NSString *)objectKey;
--(NSString *) createDataAndAck: (NSString *)searchText : (NSString *)objecKey :(NSString *)entityName;
+-(NSString *) createDataAndAck: (NSString *)searchText objectName: (NSString *)objecKey entityName: (NSString *)entityName withPageNumber: (NSInteger)page andPageSize: (NSInteger)pageSize;
 -(NSArray *) fetcheDataFromDataBase : (NSString *) entityName : (NSString *)searchText;
 -(void) fetchAndSetData;
 @end

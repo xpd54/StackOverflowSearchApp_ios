@@ -46,8 +46,11 @@
 }
 
 -(void) dataFromInternet {
+    NSInteger page = 1;
+    NSInteger pageSize = 5;
     DataProcess *dataFromInternet = [[DataProcess alloc] init];
-    _isDataFound = [NSString stringWithString:[dataFromInternet createDataAndAck:self.searchText.text :@"items" :@"Question"]];
+    //_isDataFound = [NSString stringWithString:[dataFromInternet createDataAndAck:self.searchText.text :@"items" :@"Question":page:pageSize]];
+    _isDataFound = [NSString stringWithString:[dataFromInternet createDataAndAck:self.searchText.text objectName:@"items" entityName:@"Question" withPageNumber:page andPageSize:pageSize]];
 }
 
 // getting search text from user

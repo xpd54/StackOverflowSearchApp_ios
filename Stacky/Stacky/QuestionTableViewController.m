@@ -71,6 +71,21 @@ static NSString *CellIdentifier = @"CellIdentifier";
     [self userChoiceView];
 }
 
+
+
+- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
+    NSLog(@"test");
+    NSInteger page = [DataProcess getPageValue];
+    NSInteger pageSize = [DataProcess getPageSize];
+    NSString *searchText = [DataProcess getSearchString];
+    page++;
+    [_getDataFromDataBase createDataAndAck:searchText objectName:@"items" entityName:@"Question" withPageNumber:page andPageSize:pageSize];
+    [_getDataFromDataBase fetchAndSetData];
+    [self.tableView reloadData];
+}
+
+
+
 - (void)loadUIWebView : (NSString *) currentURL {
     InternetConnection *connection = [[InternetConnection alloc]init];
     if ([connection checkInternetConnection]) {
