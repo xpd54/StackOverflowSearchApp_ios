@@ -36,6 +36,9 @@ static NSString *CellIdentifier = @"CellIdentifier";
     UITableView *tableView = (id)[self.view viewWithTag:1];
     [tableView registerClass:[QuestionTableViewCell class] forCellReuseIdentifier:CellIdentifier];
     // other method call is here
+    
+    //hide right bar button
+    [self hideDoneBarButton:YES];
 }
 
 - (void)didReceiveMemoryWarning
@@ -82,6 +85,8 @@ static NSString *CellIdentifier = @"CellIdentifier";
 }
 
 -(void) userChoiceView {
+    [self hideBackBarButton:YES]; // hiding back button
+    [self.navigationItem.rightBarButtonItem setEnabled:YES];
     UIView *transparetSubView = [[UIView alloc] initWithFrame:self.view.bounds];
     transparetSubView.tag = 3;
     transparetSubView.backgroundColor = [UIColor blackColor];
@@ -127,7 +132,12 @@ static NSString *CellIdentifier = @"CellIdentifier";
     self.tableView.scrollEnabled = NO;
 }
 
+
+
 -(IBAction)showFullAnswer:(id)sender {
+    
+    [self hideBackBarButton:YES];
+    
     viewIndicatorViewController *indicator = [[viewIndicatorViewController alloc] init];
     InternetConnection *connection = [[InternetConnection alloc]init];
     UIView *choiceViewToRemove = [self.view viewWithTag:3];
@@ -149,7 +159,11 @@ static NSString *CellIdentifier = @"CellIdentifier";
     }
 
 }
+
+
 -(IBAction)showAcceptedAnswer:(id)sender {
+    [self hideBackBarButton:YES];
+    
     viewIndicatorViewController *indicator = [[viewIndicatorViewController alloc]init];
     InternetConnection *connection = [[InternetConnection alloc]init];
     UIView *choiceViewToRemove = [self.view viewWithTag:3];
@@ -170,6 +184,25 @@ static NSString *CellIdentifier = @"CellIdentifier";
         [self.tableView reloadData];
     }
 }
+
+-(void) hideBackBarButton : (BOOL) show {
+    if (show) {
+       self.navigationItem.hidesBackButton = YES;
+    }
+    else {
+       self.navigationItem.hidesBackButton = NO;
+    }
+    
+}
+
+-(void) hideDoneBarButton : (BOOL) show {
+    if (show) {
+        [self.navigationItem.rightBarButtonItem setEnabled:NO];
+    }
+    else
+        [self.navigationItem.rightBarButtonItem setEnabled:YES];
+}
+
 - (IBAction)close:(id)sender {
     UIView *viewToRemove = [self.view viewWithTag:2];
     UIView *choiceViewToRemove = [self.view viewWithTag:3];
@@ -179,5 +212,7 @@ static NSString *CellIdentifier = @"CellIdentifier";
     [self.tableView reloadData];
     //scrolling view enable
     self.tableView.scrollEnabled = YES;
+    [self hideBackBarButton:NO];
+    [self hideDoneBarButton:YES];
 }
 @end
