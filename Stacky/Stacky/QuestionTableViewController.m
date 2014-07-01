@@ -74,14 +74,28 @@ static NSString *CellIdentifier = @"CellIdentifier";
 
 
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
-    NSLog(@"test");
-    NSInteger page = [DataProcess getPageValue];
-    NSInteger pageSize = [DataProcess getPageSize];
-    NSString *searchText = [DataProcess getSearchString];
-    page++;
-    [_getDataFromDataBase createDataAndAck:searchText objectName:@"items" entityName:@"Question" withPageNumber:page andPageSize:pageSize];
-    [_getDataFromDataBase fetchAndSetData];
-    [self.tableView reloadData];
+    NSLog(@"scrolled");
+    InternetConnection *internetConnectionStatus = [[InternetConnection alloc] init];
+    viewIndicatorViewController *indicator = [[viewIndicatorViewController alloc]init];
+    [indicator startAnimation:self];
+    if ([internetConnectionStatus checkInternetConnection]) {
+        NSInteger page = [DataProcess getPageValue];
+        NSInteger pageSize = [DataProcess getPageSize];
+        NSString *searchText = [DataProcess getSearchString];
+        page++;
+        //pageSize = pageSize + pageSize;
+        [_getDataFromDataBase createDataAndAck:searchText objectName:@"items" entityName:@"Question" withPageNumber:page andPageSize:pageSize];
+        [_getDataFromDataBase fetchAndSetData];
+        [indicator removeIndicator:self];
+        [self.tableView reloadData];
+    }
+    
+    else {
+        [indicator removeIndicator:self];
+        Alert *noInternetConnection = [[Alert alloc] init];
+        [noInternetConnection showAlertsForInterConnection];
+    }
+    
 }
 
 

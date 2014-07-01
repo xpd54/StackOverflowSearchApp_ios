@@ -32,7 +32,6 @@ static NSInteger pageSize;
     _questionApiCallUrl = [_beforeUserInput stringByAppendingString:_afterUserInput];
     NSString *url = [_questionApiCallUrl stringByAddingPercentEscapesUsingEncoding:
                      NSASCIIStringEncoding]; // Encoding of url string
-    NSLog(@"%@",url);
     return url;
 }
 
