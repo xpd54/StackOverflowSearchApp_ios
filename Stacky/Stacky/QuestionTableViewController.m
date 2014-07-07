@@ -95,6 +95,7 @@ static NSString *CellIdentifier = @"CellIdentifier";
         Alert *noInternetConnection = [[Alert alloc] init];
         [noInternetConnection showAlertsForInterConnection];
     }
+    self.tableView.contentOffset = CGPointMake(0, 0 - self.tableView.contentInset.top);
     
 }
 
