@@ -117,16 +117,15 @@ static NSString *CellIdentifier = @"CellIdentifier";
     float bottomEdge = scrollView.contentOffset.y + scrollView.frame.size.height;
     if(bottomEdge >= scrollView.contentSize.height) {
         InternetConnection *internetConnectionStatus = [[InternetConnection alloc] init];
-        //viewIndicatorViewController *indicator = [[viewIndicatorViewController alloc]init];
-        //[indicator startAnimation:self];
         if ([internetConnectionStatus checkInternetConnection]) {
-            MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
-            hud.mode = MBProgressHUDModeText;
-            hud.labelText = @"Getting Data...";
-            hud.margin = 10.f;
-            hud.yOffset = 150.f;
-            hud.removeFromSuperViewOnHide = YES;
-            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_LOW, 0), ^{
+            UIActivityIndicatorView *indicator = [self getIndicatorWithPositionOfX:self.view.center.x  andY:self.view.center.y+150];
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [indicator startAnimating];
+                [self.view.window addSubview:indicator];
+            });
+            
+            dispatch_queue_t myqueue = dispatch_queue_create("com.ravi.myqueue", NULL);
+            dispatch_async(myqueue, ^{
                 NSInteger page = [DataProcess getPageValue];
                 NSInteger pageSize = [DataProcess getPageSize];
                 NSString *searchText = [DataProcess getSearchString];
@@ -134,17 +133,14 @@ static NSString *CellIdentifier = @"CellIdentifier";
                 pageSize = pageSize + 10;
                 [_getDataFromDataBase createDataAndAck:searchText objectName:@"items" entityName:@"Question" withPageNumber:page andPageSize:pageSize];
                 [_getDataFromDataBase fetchAndSetData];
-                
-                //[self performSelectorInBackground:@selector(getDataWhileScrolling) withObject:nil];
                 dispatch_async(dispatch_get_main_queue(), ^{
-                    [hud hide:YES];
+                    [indicator stopAnimating];
+                    indicator.hidden = YES;
                     [self.tableView reloadData];
                 });
             });
         }
-        
         else {
-            //[indicator removeIndicator:self];
             Alert *noInternetConnection = [[Alert alloc] init];
             [noInternetConnection showAlertsForInterConnection];
         }
@@ -152,6 +148,12 @@ static NSString *CellIdentifier = @"CellIdentifier";
     
 }
 
+
+-(UIActivityIndicatorView *) getIndicatorWithPositionOfX:(float) x andY:(float) y {
+    UIActivityIndicatorView *activityIndicator = [[UIActivityIndicatorView alloc] initWithFrame:CGRectMake(x, y, 0.0f, 0.0f)];
+    [activityIndicator setActivityIndicatorViewStyle:UIActivityIndicatorViewStyleWhiteLarge];
+    return activityIndicator;
+}
 
 -(void) getDataWhileScrolling {
     NSInteger page = [DataProcess getPageValue];
