@@ -24,6 +24,9 @@ static NSInteger pageSize;
 +(NSInteger ) getPageSize {
     return pageSize;
 }
+-(NSArray *) getData {
+    return _data;
+}
 -(NSString *) getApiCall : (NSString *) userTextForSearch {
     _beforeUserInput = @"http://api.stackexchange.com/2.2/search/advanced?";
     _beforeUserInput = [_beforeUserInput stringByAppendingFormat:@"page=%i&pagesize=%i&order=desc&sort=activity&q=",page,pageSize];
@@ -100,6 +103,8 @@ static NSInteger pageSize;
 // reading data from database and setting it for that object
 -(void) fetchAndSetData {
     _data = [self fetcheDataFromDataBase:@"Question": searchStringFromUser];
+    
+    
     if([_data count] == 0) {
         Alert *dataMissing = [[Alert alloc] init];
         InternetConnection *connection = [[InternetConnection alloc] init];

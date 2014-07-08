@@ -12,6 +12,7 @@
 #import "Alert.h"
 #import "DataProcess.h"
 #import "viewIndicatorViewController.h"
+#import "MBProgressHUD.h"
 @interface QuestionTableViewController ()
 @end
 
@@ -41,25 +42,26 @@ static NSString *CellIdentifier = @"CellIdentifier";
     [self hideDoneBarButton:YES];
 }
 
+
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
 }
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return  [_getDataFromDataBase.data count];
+    return  [[_getDataFromDataBase getData] count];
 }
 
 -(UITableViewCell *) tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     QuestionTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-    NSManagedObject *queTable = [_getDataFromDataBase.data objectAtIndex:indexPath.row];
+    NSManagedObject *queTable = [[_getDataFromDataBase getData] objectAtIndex:indexPath.row];
     cell.question = [queTable valueForKey:@"title"];
     cell.answerCount = [queTable valueForKey:@"answer_count"];
     return cell;
 }
 
 -(void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    NSManagedObject *que = [_getDataFromDataBase.data objectAtIndex:indexPath.row];
+    NSManagedObject *que = [[_getDataFromDataBase getData] objectAtIndex:indexPath.row];
     NSString *currentQuestionId = [que valueForKey:@"question_id"];
     _currentQuestionUrl = @"http://stackoverflow.com/questions/";
     _currentQuestionUrl = [_currentQuestionUrl stringByAppendingString:currentQuestionId];
@@ -71,37 +73,99 @@ static NSString *CellIdentifier = @"CellIdentifier";
     [self userChoiceView];
 }
 
+//
+//- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
+//    NSLog(@"scrolled");
+//    float bottomEdge = scrollView.contentOffset.y + scrollView.frame.size.height;
+//    if(bottomEdge >= scrollView.contentSize.height) {
+//        InternetConnection *internetConnectionStatus = [[InternetConnection alloc] init];
+//        //viewIndicatorViewController *indicator = [[viewIndicatorViewController alloc]init];
+//        //[indicator startAnimation:self];
+//        if ([internetConnectionStatus checkInternetConnection]) {
+//            [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+//            dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_LOW, 0), ^{
+//                // Do something...
+//                
+//                NSInteger page = [DataProcess getPageValue];
+//                NSInteger pageSize = [DataProcess getPageSize];
+//                NSString *searchText = [DataProcess getSearchString];
+//                //page++;
+//                pageSize = pageSize + 10;
+//                [_getDataFromDataBase createDataAndAck:searchText objectName:@"items" entityName:@"Question" withPageNumber:page andPageSize:pageSize];
+//                [_getDataFromDataBase fetchAndSetData];
+//                dispatch_async(dispatch_get_main_queue(), ^{
+//                    [MBProgressHUD hideHUDForView:self.view animated:YES];
+//                    [self.tableView reloadData];
+//                });
+//                
+//            });
+//        }
+//    
+//        else {
+//            //[indicator removeIndicator:self];
+//            Alert *noInternetConnection = [[Alert alloc] init];
+//            [noInternetConnection showAlertsForInterConnection];
+//        }
+//    }
+//
+//}
+//
 
 
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
     NSLog(@"scrolled");
-    InternetConnection *internetConnectionStatus = [[InternetConnection alloc] init];
-    viewIndicatorViewController *indicator = [[viewIndicatorViewController alloc]init];
-    [indicator startAnimation:self];
-    if ([internetConnectionStatus checkInternetConnection]) {
-        NSInteger page = [DataProcess getPageValue];
-        NSInteger pageSize = [DataProcess getPageSize];
-        NSString *searchText = [DataProcess getSearchString];
-        page++;
-        //pageSize = pageSize + pageSize;
-        [_getDataFromDataBase createDataAndAck:searchText objectName:@"items" entityName:@"Question" withPageNumber:page andPageSize:pageSize];
-        [_getDataFromDataBase fetchAndSetData];
-        [indicator removeIndicator:self];
-        [self.tableView reloadData];
+    float bottomEdge = scrollView.contentOffset.y + scrollView.frame.size.height;
+    if(bottomEdge >= scrollView.contentSize.height) {
+        InternetConnection *internetConnectionStatus = [[InternetConnection alloc] init];
+        //viewIndicatorViewController *indicator = [[viewIndicatorViewController alloc]init];
+        //[indicator startAnimation:self];
+        if ([internetConnectionStatus checkInternetConnection]) {
+            MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
+            hud.mode = MBProgressHUDModeText;
+            hud.labelText = @"Getting Data...";
+            hud.margin = 10.f;
+            hud.yOffset = 150.f;
+            hud.removeFromSuperViewOnHide = YES;
+            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_LOW, 0), ^{
+                NSInteger page = [DataProcess getPageValue];
+                NSInteger pageSize = [DataProcess getPageSize];
+                NSString *searchText = [DataProcess getSearchString];
+                //page++;
+                pageSize = pageSize + 10;
+                [_getDataFromDataBase createDataAndAck:searchText objectName:@"items" entityName:@"Question" withPageNumber:page andPageSize:pageSize];
+                [_getDataFromDataBase fetchAndSetData];
+                
+                //[self performSelectorInBackground:@selector(getDataWhileScrolling) withObject:nil];
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    [hud hide:YES];
+                    [self.tableView reloadData];
+                });
+            });
+        }
+        
+        else {
+            //[indicator removeIndicator:self];
+            Alert *noInternetConnection = [[Alert alloc] init];
+            [noInternetConnection showAlertsForInterConnection];
+        }
     }
-    
-    else {
-        [indicator removeIndicator:self];
-        Alert *noInternetConnection = [[Alert alloc] init];
-        [noInternetConnection showAlertsForInterConnection];
-    }
-    self.tableView.contentOffset = CGPointMake(0, 0 - self.tableView.contentInset.top);
     
 }
 
 
+-(void) getDataWhileScrolling {
+    NSInteger page = [DataProcess getPageValue];
+    NSInteger pageSize = [DataProcess getPageSize];
+    NSString *searchText = [DataProcess getSearchString];
+    //page++;
+    pageSize = pageSize + 10;
+    [_getDataFromDataBase createDataAndAck:searchText objectName:@"items" entityName:@"Question" withPageNumber:page andPageSize:pageSize];
+    [_getDataFromDataBase fetchAndSetData];
+    
+}
 
-- (void)loadUIWebView : (NSString *) currentURL {
+
+-(void)loadUIWebView : (NSString *) currentURL {
     InternetConnection *connection = [[InternetConnection alloc]init];
     if ([connection checkInternetConnection]) {
         UIWebView *webView = [[UIWebView alloc] initWithFrame:self.view.bounds];

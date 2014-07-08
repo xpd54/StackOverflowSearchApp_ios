@@ -48,6 +48,7 @@
 		161F3CEF19518FD700BD39EB /* viewIndicatorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 161F3CEE19518FD700BD39EB /* viewIndicatorViewController.m */; };
 		1623D5A9194EBFE8001E3D9F /* Alert.m in Sources */ = {isa = PBXBuildFile; fileRef = 1623D5A8194EBFE8001E3D9F /* Alert.m */; };
 		1623D5BD194F0E3C001E3D9F /* InternetConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = 1623D5BC194F0E3C001E3D9F /* InternetConnection.m */; };
+		16474B01196BB10E0064E224 /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 16474B00196BB10E0064E224 /* MBProgressHUD.m */; };
 		16A103121945B38300E595AB /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 16A103111945B38300E595AB /* Foundation.framework */; };
 		16A103141945B38300E595AB /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 16A103131945B38300E595AB /* CoreGraphics.framework */; };
 		16A103161945B38300E595AB /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 16A103151945B38300E595AB /* UIKit.framework */; };
@@ -135,6 +136,8 @@
 		1623D5A8194EBFE8001E3D9F /* Alert.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Alert.m; sourceTree = "<group>"; };
 		1623D5BB194F0E3C001E3D9F /* InternetConnection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InternetConnection.h; sourceTree = "<group>"; };
 		1623D5BC194F0E3C001E3D9F /* InternetConnection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InternetConnection.m; sourceTree = "<group>"; };
+		16474AFF196BB10E0064E224 /* MBProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBProgressHUD.h; sourceTree = "<group>"; };
+		16474B00196BB10E0064E224 /* MBProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBProgressHUD.m; sourceTree = "<group>"; };
 		16A1030E1945B38300E595AB /* Stacky.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Stacky.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		16A103111945B38300E595AB /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		16A103131945B38300E595AB /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -194,6 +197,19 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		160AA5D7196BBB0E00916936 /* Indicator */ = {
+			isa = PBXGroup;
+			children = (
+				16474AFF196BB10E0064E224 /* MBProgressHUD.h */,
+				16474B00196BB10E0064E224 /* MBProgressHUD.m */,
+				161F3CED19518FD700BD39EB /* viewIndicatorViewController.h */,
+				161F3CEE19518FD700BD39EB /* viewIndicatorViewController.m */,
+				1623D5A7194EBFE8001E3D9F /* Alert.h */,
+				1623D5A8194EBFE8001E3D9F /* Alert.m */,
+			);
+			name = Indicator;
+			sourceTree = "<group>";
+		};
 		161776111949C67F00D39A66 /* helpshift-sdk-ios-v4.5.0 */ = {
 			isa = PBXGroup;
 			children = (
@@ -306,18 +322,15 @@
 		16A103171945B38300E595AB /* Stacky */ = {
 			isa = PBXGroup;
 			children = (
+				160AA5D7196BBB0E00916936 /* Indicator */,
 				1623D5BE194F0FA1001E3D9F /* InternetConnection */,
 				161776111949C67F00D39A66 /* helpshift-sdk-ios-v4.5.0 */,
 				16A103201945B38300E595AB /* AppDelegate.h */,
 				16A103211945B38300E595AB /* AppDelegate.m */,
-				16A103231945B38300E595AB /* Main.storyboard */,
-				1617760E1949798800D39A66 /* stackOverFlowData.xcdatamodeld */,
 				16A103261945B38300E595AB /* ViewController.h */,
 				16A103271945B38300E595AB /* ViewController.m */,
-				161F3CED19518FD700BD39EB /* viewIndicatorViewController.h */,
-				161F3CEE19518FD700BD39EB /* viewIndicatorViewController.m */,
-				1623D5A7194EBFE8001E3D9F /* Alert.h */,
-				1623D5A8194EBFE8001E3D9F /* Alert.m */,
+				16A103231945B38300E595AB /* Main.storyboard */,
+				1617760E1949798800D39A66 /* stackOverFlowData.xcdatamodeld */,
 				16A104621946E79900E595AB /* QuestionTableViewCell.h */,
 				16A104631946E79900E595AB /* QuestionTableViewCell.m */,
 				16A1045F1946E52300E595AB /* QuestionTableViewController.h */,
@@ -502,6 +515,7 @@
 				161776871949DE5A00D39A66 /* Reachability.m in Sources */,
 				16A104641946E79900E595AB /* QuestionTableViewCell.m in Sources */,
 				16A103221945B38300E595AB /* AppDelegate.m in Sources */,
+				16474B01196BB10E0064E224 /* MBProgressHUD.m in Sources */,
 				16A104611946E52300E595AB /* QuestionTableViewController.m in Sources */,
 				161776101949798800D39A66 /* stackOverFlowData.xcdatamodeld in Sources */,
 				161F3CEF19518FD700BD39EB /* viewIndicatorViewController.m in Sources */,

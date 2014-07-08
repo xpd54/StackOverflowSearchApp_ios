@@ -21,4 +21,5 @@
 -(NSString *) createDataAndAck: (NSString *)searchText objectName: (NSString *)objecKey entityName: (NSString *)entityName withPageNumber: (NSInteger)page andPageSize: (NSInteger)pageSize;
 -(NSArray *) fetcheDataFromDataBase : (NSString *) entityName : (NSString *)searchText;
 -(void) fetchAndSetData;
+-(NSArray *) getData;
 @end
