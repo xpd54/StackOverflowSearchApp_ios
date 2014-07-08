@@ -38,22 +38,6 @@
 
 -(void) startAnimation : (UIViewController *) viewOfIndicator {
     [self performSelectorInBackground:@selector(activityIndicator:) withObject:viewOfIndicator];
-    
-//    dispatch_async(dispatch_get_main_queue(),^{
-//        
-//        UIView *transparetSubView = [[UIView alloc] initWithFrame:viewOfIndicator.view.bounds];
-//        transparetSubView.tag = 6;
-//        transparetSubView.backgroundColor = [UIColor blackColor];
-//        transparetSubView.alpha = 0.8;
-//        transparetSubView.opaque = NO;
-//        _activityIndicator = [[UIActivityIndicatorView alloc] initWithFrame:CGRectMake(viewOfIndicator.view.center.x,viewOfIndicator.view.center.y, 0.0f, 0.0f)];
-//        [_activityIndicator setActivityIndicatorViewStyle:UIActivityIndicatorViewStyleWhiteLarge];
-//        [_activityIndicator startAnimating];
-//        [transparetSubView addSubview:_activityIndicator];
-//        [viewOfIndicator.view addSubview:transparetSubView];
-//
-//    
-//    });
 }
 
 -(void) activityIndicator : (UIViewController *)viewOfIndicator {
@@ -67,6 +51,12 @@
     [_activityIndicator startAnimating];
     [transparetSubView addSubview:_activityIndicator];
     [viewOfIndicator.view addSubview:transparetSubView];
+}
+
+-(UIActivityIndicatorView *) getIndicatorWithPositionOfX:(float) x andY:(float) y {
+    UIActivityIndicatorView *activityIndicator = [[UIActivityIndicatorView alloc] initWithFrame:CGRectMake(x, y, 0.0f, 0.0f)];
+    [activityIndicator setActivityIndicatorViewStyle:UIActivityIndicatorViewStyleWhiteLarge];
+    return activityIndicator;
 }
 
 -(void) removeIndicator : (UIViewController *) viewOfIndicator {

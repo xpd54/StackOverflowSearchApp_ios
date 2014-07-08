@@ -73,47 +73,8 @@ static NSString *CellIdentifier = @"CellIdentifier";
     [self userChoiceView];
 }
 
-//
-//- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
-//    NSLog(@"scrolled");
-//    float bottomEdge = scrollView.contentOffset.y + scrollView.frame.size.height;
-//    if(bottomEdge >= scrollView.contentSize.height) {
-//        InternetConnection *internetConnectionStatus = [[InternetConnection alloc] init];
-//        //viewIndicatorViewController *indicator = [[viewIndicatorViewController alloc]init];
-//        //[indicator startAnimation:self];
-//        if ([internetConnectionStatus checkInternetConnection]) {
-//            [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-//            dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_LOW, 0), ^{
-//                // Do something...
-//                
-//                NSInteger page = [DataProcess getPageValue];
-//                NSInteger pageSize = [DataProcess getPageSize];
-//                NSString *searchText = [DataProcess getSearchString];
-//                //page++;
-//                pageSize = pageSize + 10;
-//                [_getDataFromDataBase createDataAndAck:searchText objectName:@"items" entityName:@"Question" withPageNumber:page andPageSize:pageSize];
-//                [_getDataFromDataBase fetchAndSetData];
-//                dispatch_async(dispatch_get_main_queue(), ^{
-//                    [MBProgressHUD hideHUDForView:self.view animated:YES];
-//                    [self.tableView reloadData];
-//                });
-//                
-//            });
-//        }
-//    
-//        else {
-//            //[indicator removeIndicator:self];
-//            Alert *noInternetConnection = [[Alert alloc] init];
-//            [noInternetConnection showAlertsForInterConnection];
-//        }
-//    }
-//
-//}
-//
-
 
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
-    NSLog(@"scrolled");
     float bottomEdge = scrollView.contentOffset.y + scrollView.frame.size.height;
     if(bottomEdge >= scrollView.contentSize.height) {
         InternetConnection *internetConnectionStatus = [[InternetConnection alloc] init];
@@ -123,13 +84,11 @@ static NSString *CellIdentifier = @"CellIdentifier";
                 [indicator startAnimating];
                 [self.view.window addSubview:indicator];
             });
-            
             dispatch_queue_t myqueue = dispatch_queue_create("com.ravi.myqueue", NULL);
             dispatch_async(myqueue, ^{
                 NSInteger page = [DataProcess getPageValue];
                 NSInteger pageSize = [DataProcess getPageSize];
                 NSString *searchText = [DataProcess getSearchString];
-                //page++;
                 pageSize = pageSize + 10;
                 [_getDataFromDataBase createDataAndAck:searchText objectName:@"items" entityName:@"Question" withPageNumber:page andPageSize:pageSize];
                 [_getDataFromDataBase fetchAndSetData];
@@ -155,17 +114,6 @@ static NSString *CellIdentifier = @"CellIdentifier";
     return activityIndicator;
 }
 
--(void) getDataWhileScrolling {
-    NSInteger page = [DataProcess getPageValue];
-    NSInteger pageSize = [DataProcess getPageSize];
-    NSString *searchText = [DataProcess getSearchString];
-    //page++;
-    pageSize = pageSize + 10;
-    [_getDataFromDataBase createDataAndAck:searchText objectName:@"items" entityName:@"Question" withPageNumber:page andPageSize:pageSize];
-    [_getDataFromDataBase fetchAndSetData];
-    
-}
-
 
 -(void)loadUIWebView : (NSString *) currentURL {
     InternetConnection *connection = [[InternetConnection alloc]init];
@@ -181,7 +129,7 @@ static NSString *CellIdentifier = @"CellIdentifier";
 }
 
 -(void) userChoiceView {
-    [self hideBackBarButton:YES]; // hiding back button
+    [self hideBackBarButton:YES];
     [self.navigationItem.rightBarButtonItem setEnabled:YES];
     UIView *transparetSubView = [[UIView alloc] initWithFrame:self.view.bounds];
     transparetSubView.tag = 3;

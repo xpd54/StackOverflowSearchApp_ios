@@ -12,5 +12,4 @@
 @property NSString *currentQuestionUrl;
 @property NSString *currentAcceptedAnswerUrl;
 - (IBAction)close:(id)sender;
-
 @end

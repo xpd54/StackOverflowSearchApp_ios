@@ -18,7 +18,7 @@
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
         // Initialization code
-        // Style for "Question Title" Text Lable
+        // Style for "Question Title" Text Label
         CGRect questionLabelRectangle = CGRectMake(120, -15, 90, 50);
         UILabel *questionLabel = [[UILabel alloc] initWithFrame:questionLabelRectangle];
         questionLabel.textAlignment = NSTextAlignmentLeft;
@@ -33,7 +33,7 @@
         _questionString.numberOfLines = 0; // for multiple lines it will automatically handle
         [self.contentView addSubview:_questionString];
         
-        //Style for "Ans Count" Text Lable
+        //Style for "Ans Count" Text Label
         CGRect ansCountLabelRectangle = CGRectMake(5,-15,90,50);
         UILabel *ansCountLabel = [[UILabel alloc] initWithFrame:ansCountLabelRectangle];
         ansCountLabel.textAlignment = NSTextAlignmentLeft;

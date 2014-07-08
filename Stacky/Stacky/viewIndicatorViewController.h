@@ -12,4 +12,5 @@
 @property UIActivityIndicatorView *activityIndicator;
 -(void) startAnimation : (UIViewController *) viewOfIndicator;
 -(void) removeIndicator : (UIViewController *) viewOfIndicator;
+-(UIActivityIndicatorView *) getIndicatorWithPositionOfX:(float) x andY:(float) y;
 @end

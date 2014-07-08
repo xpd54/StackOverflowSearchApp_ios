@@ -29,7 +29,7 @@ static NSInteger pageSize;
 }
 -(NSString *) getApiCall : (NSString *) userTextForSearch {
     _beforeUserInput = @"http://api.stackexchange.com/2.2/search/advanced?";
-    _beforeUserInput = [_beforeUserInput stringByAppendingFormat:@"page=%i&pagesize=%i&order=desc&sort=activity&q=",page,pageSize];
+    _beforeUserInput = [_beforeUserInput stringByAppendingFormat:@"page=%li&pagesize=%i&order=desc&sort=activity&q=",(long)page,pageSize];
     _beforeUserInput = [_beforeUserInput stringByAppendingString:userTextForSearch];
     _afterUserInput = @"&accepted=True&site=stackoverflow&filter=!0S26i4L6gvyVQBhi(jD)OK210";
     _questionApiCallUrl = [_beforeUserInput stringByAppendingString:_afterUserInput];
@@ -63,7 +63,7 @@ static NSInteger pageSize;
         NSData* responseData = [NSData dataWithContentsOfURL:[NSURL URLWithString:apiCall]];
         [self saveDataInDataBase:[self fetchDataFromInternet:responseData :objecKey] : searchText];
         
-        NSArray *local = [self fetcheDataFromDataBase:entityName :searchText];
+        NSArray *local = [self fetchDataFromDataBase:entityName :searchText];
         if ([local count] > 0) {
             return yes;
         }
@@ -71,7 +71,7 @@ static NSInteger pageSize;
             return no;
         }
     } else {
-        NSArray *local = [self fetcheDataFromDataBase:entityName :searchText];
+        NSArray *local = [self fetchDataFromDataBase:entityName :searchText];
         if ([local count] > 0) {
             return yes;
         } else {
@@ -102,9 +102,7 @@ static NSInteger pageSize;
 
 // reading data from database and setting it for that object
 -(void) fetchAndSetData {
-    _data = [self fetcheDataFromDataBase:@"Question": searchStringFromUser];
-    
-    
+    _data = [self fetchDataFromDataBase:@"Question": searchStringFromUser];
     if([_data count] == 0) {
         Alert *dataMissing = [[Alert alloc] init];
         InternetConnection *connection = [[InternetConnection alloc] init];
@@ -118,7 +116,7 @@ static NSInteger pageSize;
     }
 }
 
--(NSArray *) fetcheDataFromDataBase : (NSString *) entityName : (NSString *)searchText {
+-(NSArray *) fetchDataFromDataBase : (NSString *) entityName : (NSString *)searchText {
     NSArray *result;
     NSManagedObjectContext *context = [self managedObjectContext];
     NSEntityDescription *entityDescription = [NSEntityDescription entityForName:entityName inManagedObjectContext:context];
