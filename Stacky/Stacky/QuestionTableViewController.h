@@ -11,5 +11,6 @@
 @property (copy , nonatomic) DataProcess *getDataFromDataBase;
 @property NSString *currentQuestionUrl;
 @property NSString *currentAcceptedAnswerUrl;
+@property NSMutableArray *dataForCell;
 - (IBAction)close:(id)sender;
 @end

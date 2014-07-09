@@ -36,6 +36,19 @@ static NSString *CellIdentifier = @"CellIdentifier";
     [_getDataFromDataBase fetchAndSetData];
     UITableView *tableView = (id)[self.view viewWithTag:1];
     [tableView registerClass:[QuestionTableViewCell class] forCellReuseIdentifier:CellIdentifier];
+    
+    _dataForCell = [[NSMutableArray alloc] init];
+    NSDictionary *dataDic = [[NSDictionary alloc] init];
+    for(NSManagedObject *data in [_getDataFromDataBase getData]) {
+        dataDic = [NSDictionary dictionaryWithObjectsAndKeys:
+                    [data valueForKey:@"title"],@"title",
+                    [data valueForKey:@"question_id"],@"question_id",
+                    [data valueForKey:@"answer_count"],@"answer_count",
+                    [data valueForKey:@"accepted_answer_id"],@"accepted_answer_id",
+                    [data valueForKey:@"search_string"],@"search_string",
+                    nil];
+        [_dataForCell insertObject:dataDic atIndex:[_dataForCell count]];
+    }
     // other method call is here
     
     //hide right bar button
@@ -49,25 +62,25 @@ static NSString *CellIdentifier = @"CellIdentifier";
 }
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return  [[_getDataFromDataBase getData] count];
+    return  [_dataForCell count];
 }
 
 -(UITableViewCell *) tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     QuestionTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-    NSManagedObject *queTable = [[_getDataFromDataBase getData] objectAtIndex:indexPath.row];
+    NSManagedObject *queTable = [_dataForCell objectAtIndex:indexPath.row];
     cell.question = [queTable valueForKey:@"title"];
     cell.answerCount = [queTable valueForKey:@"answer_count"];
     return cell;
 }
 
 -(void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    NSManagedObject *que = [[_getDataFromDataBase getData] objectAtIndex:indexPath.row];
+    NSManagedObject *que = [_dataForCell objectAtIndex:indexPath.row];
     NSString *currentQuestionId = [que valueForKey:@"question_id"];
     _currentQuestionUrl = @"http://stackoverflow.com/questions/";
     _currentQuestionUrl = [_currentQuestionUrl stringByAppendingString:currentQuestionId];
     
     
-    NSString *acceptedAnswerId = [que valueForKeyPath:@"accepted_answer_id"];
+    NSString *acceptedAnswerId = [que valueForKey:@"accepted_answer_id"];
     _currentAcceptedAnswerUrl = @"http://stackoverflow.com/a/";
     _currentAcceptedAnswerUrl = [_currentAcceptedAnswerUrl stringByAppendingString:acceptedAnswerId];
     [self userChoiceView];
@@ -89,9 +102,21 @@ static NSString *CellIdentifier = @"CellIdentifier";
                 NSInteger page = [DataProcess getPageValue];
                 NSInteger pageSize = [DataProcess getPageSize];
                 NSString *searchText = [DataProcess getSearchString];
-                pageSize = pageSize + 10;
+                page++;
+                //pageSize = pageSize + 10;
                 [_getDataFromDataBase createDataAndAck:searchText objectName:@"items" entityName:@"Question" withPageNumber:page andPageSize:pageSize];
                 [_getDataFromDataBase fetchAndSetData];
+                NSDictionary *dataDic = [[NSDictionary alloc] init];
+                for(NSManagedObject *data in [_getDataFromDataBase getData]) {
+                    dataDic = [NSDictionary dictionaryWithObjectsAndKeys:
+                               [data valueForKey:@"title"],@"title",
+                               [data valueForKey:@"question_id"],@"question_id",
+                               [data valueForKey:@"answer_count"],@"answer_count",
+                               [data valueForKey:@"accepted_answer_id"],@"accepted_answer_id",
+                               [data valueForKey:@"search_string"],@"search_string",
+                               nil];
+                    [_dataForCell insertObject:dataDic atIndex:[_dataForCell count]];
+                }
                 dispatch_async(dispatch_get_main_queue(), ^{
                     [indicator stopAnimating];
                     indicator.hidden = YES;
