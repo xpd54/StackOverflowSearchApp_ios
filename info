@@ -1,9 +1,0 @@
-http://api.stackexchange.com/2.2/search/advanced?order=desc&sort=activity&q=how%20to%20use%20c%2B%2B%20with%20python&accepted=True&site=stackoverflow&filter=!0S26i4L6gvyVQBhi(jD)OK210
-
-//At -> (Question )4 attributes,question_id,answer_count,title
-
-
-https://api.stackexchange.com/2.2/questions/2043453/answers?order=desc&sort=activity&site=stackoverflow&filter=!)Q2AgVnfcEIc6-iiTzgc5tkd
-
-
-//Answer (owner( reputation,display_name ),isAccepted,score,answer_id,question_id )
